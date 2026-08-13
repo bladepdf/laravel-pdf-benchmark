@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Inter Local';
+    src: url('../../../storage/app/fonts/inter.woff2') format('woff2');
+    font-display: swap;
+}
+
+.local-card {
+    border: 4px solid #2557d6;
+    border-radius: 18px;
+    color: #112047;
+    font-family: 'Inter Local', sans-serif;
+    padding: 32px;
+}

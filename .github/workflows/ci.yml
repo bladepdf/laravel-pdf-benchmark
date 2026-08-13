@@ -1,0 +1,123 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: bcmath, gd, intl, pcntl, zip
+          coverage: none
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+          cache: npm
+
+      - name: Install PDF inspection tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes poppler-utils qpdf
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Install JavaScript dependencies
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: 'true'
+        run: npm ci
+
+      - name: Build deterministic assets
+        run: |
+          npm run assets
+          npm run build
+
+      - name: Check formatting
+        run: composer lint
+
+      - name: Static analysis
+        run: composer analyse
+
+      - name: PHPUnit
+        run: composer test
+
+  renderer-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure non-publishable CI environment
+        run: |
+          cp .env.benchmark.example .env
+          {
+            echo 'BENCHMARK_HOST_LABEL=github-hosted-runner'
+            echo 'BENCHMARK_REGION=ci-only'
+            echo 'BENCHMARK_HOST_PROVIDER=github'
+            echo 'BENCHMARK_HOST_INSTANCE_TYPE=hosted-runner'
+            echo 'BENCHMARK_HOST_CPU_ALLOCATION=unknown'
+            echo 'BENCHMARK_HOST_PURPOSE=development'
+            echo "BENCHMARK_HOST_VCPU=$(getconf _NPROCESSORS_ONLN)"
+            echo "BENCHMARK_HOST_MEMORY_MIB=$(awk '/MemTotal/ {print int($2 / 1024)}' /proc/meminfo)"
+            echo 'BENCHMARK_CLOUDFLARE_PLAN=not-run'
+            echo 'BENCHMARK_BLADEPDF_PLAN=not-run'
+            echo 'BENCHMARK_BLADEPDF_CONCURRENCY=1'
+            echo 'BENCHMARK_COOLDOWN_SECONDS=0'
+          } >> .env
+
+      - name: Build pinned benchmark image
+        run: docker compose build
+
+      - name: Materialize host-mounted deterministic assets
+        run: |
+          docker compose run --rm --no-deps app npm run assets
+          docker compose run --rm --no-deps app npm run build
+
+      - name: Start local rendering services
+        run: docker compose up --detach --wait gotenberg chromium-persistent
+
+      - name: Run DOMPDF, Browsershot, and Gotenberg smoke matrix
+        run: >-
+          docker compose run --rm app php artisan benchmark:run
+          --profile=smoke
+          --renderers=dompdf,browsershot,gotenberg
+          --templates=simple-invoice
+          --run-id=ci-smoke
+          --allow-dirty
+
+      - name: Generate draft smoke report
+        run: docker compose run --rm app php artisan benchmark:report ci-smoke --allow-unreviewed
+
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: renderer-smoke-diagnostics
+          path: |
+            results/runs/ci-smoke
+            storage/logs
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Stop services
+        if: always()
+        run: docker compose down --remove-orphans

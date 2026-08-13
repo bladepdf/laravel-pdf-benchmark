@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bladepdf.com/schemas/laravel-pdf-benchmark/observation-v1.json",
+  "title": "Laravel PDF benchmark observation v1",
+  "type": "object",
+  "required": ["schema_version", "run_id", "renderer", "variant", "template", "asset_mode", "scenario", "phase", "iteration", "attempt", "worker", "status", "started_monotonic_ns", "finished_monotonic_ns", "wall_ms", "request_bytes", "response_bytes"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "run_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"},
+    "renderer": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "variant": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "template": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "asset_mode": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "scenario": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "phase": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "iteration": {"type": "integer", "minimum": 1},
+    "attempt": {"type": "integer", "minimum": 1},
+    "worker": {"type": "integer", "minimum": 1},
+    "status": {"enum": ["success", "failure", "timeout"]},
+    "started_monotonic_ns": {"type": "integer", "minimum": 0},
+    "finished_monotonic_ns": {"type": "integer", "minimum": 0},
+    "wall_ms": {"type": "number", "minimum": 0},
+    "pdf_bytes": {"type": ["integer", "null"], "minimum": 0},
+    "request_bytes": {"type": "integer", "minimum": 0},
+    "response_bytes": {"type": "integer", "minimum": 0},
+    "http_status": {"type": ["integer", "null"]}
+  },
+  "additionalProperties": true
+}

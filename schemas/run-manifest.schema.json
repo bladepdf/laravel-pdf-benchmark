@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bladepdf.com/schemas/laravel-pdf-benchmark/run-manifest-v1.json",
+  "title": "Laravel PDF benchmark run manifest v1",
+  "type": "object",
+  "required": ["schema_version", "run_id", "profile", "seed", "created_at", "renderers", "templates", "environment"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "run_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"},
+    "profile": {"enum": ["smoke", "full", "capacity", "fidelity"]},
+    "seed": {"type": "integer"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "renderers": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "templates": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "environment": {"type": "object"},
+    "matrix_options": {
+      "type": "object",
+      "properties": {
+        "concurrency_levels": {"type": "array", "items": {"type": "integer", "minimum": 1}, "minItems": 1, "uniqueItems": true},
+        "iterations": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

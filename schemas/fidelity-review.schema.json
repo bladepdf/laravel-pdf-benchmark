@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bladepdf.com/schemas/laravel-pdf-benchmark/fidelity-review-v1.json",
+  "title": "Laravel PDF benchmark fidelity review v1",
+  "type": "object",
+  "required": ["schema_version", "run_id", "entries"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "run_id": {"type": "string"},
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["key", "renderer", "template", "asset_mode", "feature", "status"],
+        "properties": {
+          "key": {"type": "string"},
+          "status": {"type": ["string", "null"], "enum": ["pass", "partial", "fail", null]},
+          "problem": {"type": ["string", "null"]},
+          "note": {"type": ["string", "null"]}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

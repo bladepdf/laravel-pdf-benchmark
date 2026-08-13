@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+
+@source '../views/**/*.blade.php';
+
+@theme {
+    --font-sans: 'Inter Variable', Arial, sans-serif;
+}

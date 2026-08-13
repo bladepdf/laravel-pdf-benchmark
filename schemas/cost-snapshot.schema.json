@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bladepdf.com/schemas/laravel-pdf-benchmark/cost-snapshot-v1.json",
+  "title": "Laravel PDF benchmark cost snapshot v1",
+  "type": "object",
+  "required": ["schema_version", "currency", "verified_at", "price_basis", "deployments"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "currency": {"type": "string", "minLength": 1},
+    "verified_at": {"type": "string", "format": "date"},
+    "price_basis": {"enum": ["tax-exclusive", "tax-inclusive"]},
+    "tax_note": {"type": ["string", "null"]},
+    "notes": {"type": ["string", "null"]},
+    "deployments": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {"pattern": "^[a-z0-9][a-z0-9-]*$"},
+      "additionalProperties": {"$ref": "#/$defs/deployment"}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "nonNegative": {"type": "number", "minimum": 0},
+    "deployment": {
+      "type": "object",
+      "required": [
+        "label", "renderer", "category", "managed", "target_concurrency", "operational_responsibility", "source_url",
+        "monthly_fixed", "server_monthly", "included_pdfs", "per_pdf", "included_browser_ms", "per_browser_ms",
+        "storage_retention_months", "storage_per_gb_month", "egress_per_gb", "included_average_concurrency",
+        "assumed_average_concurrency", "per_additional_concurrency_month"
+      ],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "renderer": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "category": {"enum": ["existing-capacity", "enlarged-application-server", "dedicated-render-server", "managed-service"]},
+        "managed": {"type": "boolean"},
+        "target_concurrency": {"type": ["integer", "null"], "minimum": 1},
+        "operational_responsibility": {"enum": ["Low", "Medium", "High"]},
+        "source_url": {"type": "string", "format": "uri", "pattern": "^https://[^?#]+$"},
+        "price_notes": {"type": ["string", "null"]},
+        "infrastructure": {"type": ["object", "null"]},
+        "monthly_fixed": {"$ref": "#/$defs/nonNegative"},
+        "server_monthly": {"$ref": "#/$defs/nonNegative"},
+        "included_pdfs": {"$ref": "#/$defs/nonNegative"},
+        "per_pdf": {"$ref": "#/$defs/nonNegative"},
+        "included_browser_ms": {"$ref": "#/$defs/nonNegative"},
+        "per_browser_ms": {"$ref": "#/$defs/nonNegative"},
+        "storage_retention_months": {"$ref": "#/$defs/nonNegative"},
+        "storage_per_gb_month": {"$ref": "#/$defs/nonNegative"},
+        "egress_per_gb": {"$ref": "#/$defs/nonNegative"},
+        "included_average_concurrency": {"$ref": "#/$defs/nonNegative"},
+        "assumed_average_concurrency": {"$ref": "#/$defs/nonNegative"},
+        "per_additional_concurrency_month": {"$ref": "#/$defs/nonNegative"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,75 @@
+name: laravel-pdf-benchmark
+
+services:
+  app:
+    platform: linux/amd64
+    build:
+      context: .
+    image: ${BENCHMARK_APP_IMAGE:-laravel-pdf-benchmark:local}
+    working_dir: /workspace
+    init: true
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      GOTENBERG_URL: http://gotenberg:3000
+      PERSISTENT_CHROMIUM_URL: http://chromium-persistent:9222
+      LARAVEL_PDF_NODE_BINARY: /usr/local/bin/node
+      LARAVEL_PDF_NPM_BINARY: /usr/local/bin/npm
+      LARAVEL_PDF_NODE_MODULES_PATH: /workspace/node_modules
+      LARAVEL_PDF_TEMP_PATH: /workspace/storage/framework/benchmark
+      LARAVEL_PDF_NO_SANDBOX: "true"
+      LARAVEL_PDF_DOMPDF_CHROOT: /workspace
+      BENCHMARK_COMPOSE_PROJECT: ${COMPOSE_PROJECT_NAME:-laravel-pdf-benchmark}
+      COMPOSER_CACHE_DIR: /tmp/composer-cache
+    volumes:
+      - .:/workspace
+      - composer-vendor:/workspace/vendor
+      - node-modules:/workspace/node_modules
+      - composer-cache:/tmp/composer-cache
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      gotenberg:
+        condition: service_healthy
+      chromium-persistent:
+        condition: service_healthy
+    command: ["sleep", "infinity"]
+
+  gotenberg:
+    image: gotenberg/gotenberg:8.34.0-chromium@sha256:e6b66c4553c7747f86fb41d012665c5ac114b46188f53d09080d217bcb16cee2
+    init: true
+    command:
+      - gotenberg
+      - --chromium-auto-start=true
+      - --chromium-max-concurrency=6
+      - --chromium-max-queue-size=0
+    environment:
+      OTEL_METRICS_EXPORTER: prometheus
+      OTEL_EXPORTER_PROMETHEUS_HOST: 0.0.0.0
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:3000/health"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+
+  chromium-persistent:
+    platform: linux/amd64
+    image: ${BENCHMARK_APP_IMAGE:-laravel-pdf-benchmark:local}
+    init: true
+    working_dir: /workspace
+    environment:
+      PUPPETEER_CACHE_DIR: /opt/puppeteer
+    volumes:
+      - .:/workspace:ro
+      - node-modules:/workspace/node_modules:ro
+    command: ["node", "scripts/start-persistent-browser.mjs"]
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:9222/json/version"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+
+volumes:
+  composer-cache:
+  composer-vendor:
+  node-modules:
