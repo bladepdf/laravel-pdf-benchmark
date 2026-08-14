@@ -32,7 +32,7 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
 
 COPY . .
-RUN mkdir -p storage/framework/benchmark storage/framework/cache storage/framework/sessions storage/framework/views \
+RUN mkdir -p bootstrap/cache storage/framework/benchmark storage/framework/cache/data storage/framework/sessions storage/framework/views \
     && chmod -R a+rw storage bootstrap/cache \
     && composer install --no-interaction --prefer-dist --optimize-autoloader \
     && npm run assets \

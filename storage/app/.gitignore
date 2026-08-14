@@ -1,0 +1,7 @@
+*
+!fonts/
+fonts/*
+!fonts/OFL-Inter.txt
+!private/
+!public/
+!.gitignore

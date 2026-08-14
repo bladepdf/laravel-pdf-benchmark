@@ -37,6 +37,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install --yes poppler-utils qpdf
 
+      - name: Prepare Laravel runtime directories
+        run: mkdir -p bootstrap/cache storage/framework/cache/data storage/framework/sessions storage/framework/views
+
       - name: Install PHP dependencies
         run: composer install --no-interaction --prefer-dist
 

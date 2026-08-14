@@ -33,7 +33,32 @@ Thumbs.db
 !/results/work/.gitkeep
 /ops/costs.local.json
 
-# Project exclude paths
-/bootstrap/cache/
-/storage/app/
-/storage/framework/
+# Laravel runtime directories. Keep their placeholders in Git so a clean
+# checkout can boot before Composer or Docker has generated any cache files.
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+
+/storage/app/*
+!/storage/app/.gitignore
+!/storage/app/fonts/
+/storage/app/fonts/*
+!/storage/app/fonts/OFL-Inter.txt
+!/storage/app/private/
+!/storage/app/private/.gitignore
+!/storage/app/public/
+!/storage/app/public/.gitignore
+
+/storage/framework/*
+!/storage/framework/.gitignore
+!/storage/framework/cache/
+/storage/framework/cache/*
+!/storage/framework/cache/.gitignore
+!/storage/framework/sessions/
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
+!/storage/framework/testing/
+/storage/framework/testing/*
+!/storage/framework/testing/.gitignore
+!/storage/framework/views/
+/storage/framework/views/*
+!/storage/framework/views/.gitignore
