@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15bb0510c2450b5d03d58f92cfe6cc8b",
+    "content-hash": "ccb9d0b7883d5981bdbdd69a7656a3c7",
     "packages": [
         {
             "name": "bladepdf/laravel",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bladepdf/bladepdf-laravel.git",
-                "reference": "2e934e954bffa25743634acdc7d83f325777fb3d"
+                "reference": "b0dc862ecaa4afa074e98ab624b633b3fe609d62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bladepdf/bladepdf-laravel/zipball/2e934e954bffa25743634acdc7d83f325777fb3d",
-                "reference": "2e934e954bffa25743634acdc7d83f325777fb3d",
+                "url": "https://api.github.com/repos/bladepdf/bladepdf-laravel/zipball/b0dc862ecaa4afa074e98ab624b633b3fe609d62",
+                "reference": "b0dc862ecaa4afa074e98ab624b633b3fe609d62",
                 "shasum": ""
             },
             "require": {
@@ -73,20 +73,20 @@
                 "issues": "https://github.com/bladepdf/bladepdf-laravel/issues",
                 "source": "https://github.com/bladepdf/bladepdf-laravel"
             },
-            "time": "2026-07-26T19:42:07+00:00"
+            "time": "2026-08-14T21:28:22+00:00"
         },
         {
             "name": "bladepdf/spatie-laravel-pdf-driver",
-            "version": "v1.0.1",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bladepdf/spatie-laravel-pdf-driver.git",
-                "reference": "1cae1cfaebb57683511fb1414a23ce099400da16"
+                "reference": "c2ac3201afb3316a4d24e6a9818d6dd7a1631e87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bladepdf/spatie-laravel-pdf-driver/zipball/1cae1cfaebb57683511fb1414a23ce099400da16",
-                "reference": "1cae1cfaebb57683511fb1414a23ce099400da16",
+                "url": "https://api.github.com/repos/bladepdf/spatie-laravel-pdf-driver/zipball/c2ac3201afb3316a4d24e6a9818d6dd7a1631e87",
+                "reference": "c2ac3201afb3316a4d24e6a9818d6dd7a1631e87",
                 "shasum": ""
             },
             "require": {
@@ -131,7 +131,7 @@
                 "issues": "https://github.com/bladepdf/spatie-laravel-pdf-driver/issues",
                 "source": "https://github.com/bladepdf/spatie-laravel-pdf-driver"
             },
-            "time": "2026-07-26T15:18:18+00:00"
+            "time": "2026-08-14T21:28:58+00:00"
         },
         {
             "name": "brick/math",
@@ -9338,5 +9338,5 @@
         "php": "^8.4"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
