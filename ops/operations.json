@@ -47,7 +47,8 @@
       "asset_strategy": "Current Spatie driver submits JSON HTML; assets must be embedded or reachable",
       "ownership": {"queue": "application/provider", "concurrency": "provider limits", "storage": "application", "retry": "application", "monitoring": "application/provider", "browser_updates": "provider"},
       "operational_responsibility": "Medium",
-      "source": "https://developers.cloudflare.com/browser-run/"
+      "source": "https://developers.cloudflare.com/browser-run/",
+      "notes": "The benchmark disables the Quick Actions response cache with cacheTTL=0 so repeated deterministic fixtures measure fresh rendering."
     },
     "bladepdf": {
       "install_commands": ["composer require bladepdf/laravel bladepdf/spatie-laravel-pdf-driver spatie/laravel-pdf"],

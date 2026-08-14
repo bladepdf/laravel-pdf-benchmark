@@ -2,6 +2,7 @@
 
 namespace App\Benchmark;
 
+use App\Benchmark\Drivers\UncachedCloudflareDriver;
 use Composer\InstalledVersions;
 
 final class EnvironmentCollector
@@ -50,6 +51,12 @@ final class EnvironmentCollector
                 'host_relation' => 'co-located-with-application',
                 'separate_host_in_timed_path' => false,
                 'note' => 'Laravel workers generate load on the benchmark host. An external host may orchestrate the command, but is not the timed request generator.',
+            ],
+            'renderer_configuration' => [
+                'cloudflare' => [
+                    'quick_actions_cache_ttl_seconds' => UncachedCloudflareDriver::CACHE_TTL_SECONDS,
+                    'provider_response_cache' => 'disabled',
+                ],
             ],
             'platform' => [
                 'os_release' => $this->fileKeyValues('/etc/os-release'),

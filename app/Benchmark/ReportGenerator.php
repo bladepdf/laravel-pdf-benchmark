@@ -2,6 +2,7 @@
 
 namespace App\Benchmark;
 
+use App\Benchmark\Drivers\UncachedCloudflareDriver;
 use RuntimeException;
 
 final class ReportGenerator
@@ -87,6 +88,7 @@ final class ReportGenerator
             'methodology' => [
                 'percentile' => 'nearest-rank',
                 'cache' => 'disabled',
+                'cloudflare_quick_actions_cache_ttl_seconds' => UncachedCloudflareDriver::CACHE_TTL_SECONDS,
                 'retries' => 0,
                 'visual_reference' => 'browsershot from the same run; not an automatic correctness oracle',
                 'load_generation' => 'fixed in-process worker pool with no application queue',
@@ -187,7 +189,7 @@ final class ReportGenerator
             'Git: `'.$git['sha'].'`'.($git['dirty'] ? ' (dirty)' : '').'  ',
             'Cloudflare plan: '.$declared['cloudflare_plan'].'; BladePDF plan: '.$declared['bladepdf_plan'].'; declared BladePDF concurrency: '.$declared['bladepdf_concurrency'].'.',
             '',
-            'Percentiles: nearest-rank; application cache and retries disabled.',
+            'Percentiles: nearest-rank; application cache and retries disabled; Cloudflare Quick Actions cache disabled with `cacheTTL=0`.',
             '',
             '> Provider-side resource consumption is not observable, so only application-side usage was measured for managed services.',
             '',

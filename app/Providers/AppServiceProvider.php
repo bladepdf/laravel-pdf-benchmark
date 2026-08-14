@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Benchmark\Drivers\UncachedCloudflareDriver;
 use App\Benchmark\HttpTransferRecorder;
 use Illuminate\Http\Client\Events\RequestSending;
 use Illuminate\Http\Client\Events\ResponseReceived;
@@ -17,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(HttpTransferRecorder::class);
+
+        $this->app->singleton('laravel-pdf.driver.cloudflare', fn () => new UncachedCloudflareDriver(
+            config('laravel-pdf.cloudflare', []),
+        ));
 
         $this->app->bind('laravel-pdf.driver.browsershot-persistent', fn () => new BrowsershotDriver(
             config('laravel-pdf.browsershot', []),

@@ -94,6 +94,8 @@ Pdf::view($view, $data)
     ->generatePdfContent();
 ```
 
+The benchmark replaces only Spatie's Cloudflare driver binding with a minimal subclass that appends `cacheTTL=0` to the Quick Actions PDF endpoint. [Cloudflare otherwise caches generated Quick Actions content for five seconds by default](https://developers.cloudflare.com/browser-run/faq/#is-there-any-temporary-caching-of-submitted-content), which would turn repeated deterministic fixtures into cache-hit measurements. The effective zero-second provider cache TTL is recorded in every run manifest. No other upstream driver behavior is changed.
+
 The five deterministic fixtures use a fixed seed, date, neutral brand, and locally licensed assets:
 
 | Fixture | Purpose |
@@ -109,7 +111,7 @@ The two performance fixtures use only inline or data-URI assets so successful re
 - `native-path`: the same unmodified Laravel view for every renderer.
 - `documented-remediation`: the smallest renderer-specific remediation, with the strategy recorded in the run.
 
-The current Spatie Gotenberg driver attaches HTML only, although Gotenberg's native API also supports multipart assets. The current Cloudflare driver sends JSON HTML and does not expose an explicit readiness wait. These are capability outcomes, not harness failures. Browsershot, Gotenberg, and BladePDF use readiness waiting for the JavaScript fixture; DOMPDF intentionally does not execute JavaScript.
+The current Spatie Gotenberg driver attaches HTML only, although Gotenberg's native API also supports multipart assets. The Cloudflare integration sends JSON HTML and does not expose an explicit readiness wait; the benchmark override changes only the Quick Actions cache TTL. These are capability outcomes, not harness failures. Browsershot, Gotenberg, and BladePDF use readiness waiting for the JavaScript fixture; DOMPDF intentionally does not execute JavaScript.
 
 ## Performance methodology
 

@@ -3,9 +3,11 @@
 namespace Tests\Feature\Benchmark;
 
 use App\Benchmark\BenchmarkData;
+use App\Benchmark\Drivers\UncachedCloudflareDriver;
 use App\Benchmark\PdfRenderer;
 use BladePDF\SpatieLaravelPdf\BladePdfDriver;
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Spatie\LaravelPdf\Drivers\BrowsershotDriver;
 use Spatie\LaravelPdf\Drivers\DomPdfDriver;
@@ -23,7 +25,7 @@ final class RendererIntegrationTest extends TestCase
         $this->assertInstanceOf(BrowsershotDriver::class, app('laravel-pdf.driver.browsershot-persistent'));
         $this->assertInstanceOf(GotenbergDriver::class, app('laravel-pdf.driver.gotenberg'));
         $this->assertInstanceOf(BladePdfDriver::class, app('laravel-pdf.driver.bladepdf'));
-        $this->assertNotNull(app('laravel-pdf.driver.cloudflare'));
+        $this->assertInstanceOf(UncachedCloudflareDriver::class, app('laravel-pdf.driver.cloudflare'));
     }
 
     public function test_dompdf_generates_a_real_pdf_through_the_shared_contract(): void
@@ -46,6 +48,25 @@ final class RendererIntegrationTest extends TestCase
         $this->assertSame('failure', $result['status']);
         $this->assertSame(429, $result['http_status']);
         $this->assertSame('3', $result['response_headers']['retry-after']);
+        Http::assertSentCount(1);
+    }
+
+    public function test_cloudflare_quick_actions_cache_is_disabled(): void
+    {
+        config(['laravel-pdf.cloudflare.api_token' => 'test', 'laravel-pdf.cloudflare.account_id' => 'account']);
+        $this->app->forgetInstance('laravel-pdf.driver.cloudflare');
+        Http::fake(['api.cloudflare.com/*' => Http::response('%PDF-1.4 uncached-cloudflare', 200)]);
+
+        $result = app(PdfRenderer::class)->render('cloudflare', 'simple-invoice');
+
+        $this->assertSame('success', $result['status']);
+        Http::assertSent(function (Request $request): bool {
+            parse_str((string) parse_url($request->url(), PHP_URL_QUERY), $query);
+
+            return $request->method() === 'POST'
+                && parse_url($request->url(), PHP_URL_PATH) === '/client/v4/accounts/account/browser-rendering/pdf'
+                && $query === ['cacheTTL' => '0'];
+        });
         Http::assertSentCount(1);
     }
 
