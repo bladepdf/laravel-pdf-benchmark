@@ -58,12 +58,12 @@ The dependency locks currently resolve the following primary versions:
 
 | Component | Version |
 | --- | ---: |
-| Laravel | 13.23.0 |
+| Laravel | 13.24.0 |
 | PHP | 8.4.1 image |
 | `spatie/laravel-pdf` | 2.12.0 |
 | Browsershot | 5.4.0 |
 | DOMPDF | 3.1.6 |
-| Puppeteer | 25.4.0 |
+| Puppeteer | 25.5.0 |
 | BladePDF Spatie driver | 1.0.1 |
 | `bladepdf/laravel` | 1.0.2 |
 | Gotenberg | 8.34.0 Chromium image |
