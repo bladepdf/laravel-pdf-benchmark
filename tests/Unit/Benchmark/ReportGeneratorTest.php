@@ -95,15 +95,25 @@ final class ReportGeneratorTest extends TestCase
             ]);
         }
 
-        $summary = app(ReportGenerator::class)->generate($runId);
+        $summary = app(ReportGenerator::class)->generate(
+            $runId,
+            costSnapshotPath: $this->runsPath.'/missing-costs.json',
+        );
 
         $this->assertCount(4, $summary['results']);
         $this->assertSame(0, $summary['methodology']['cloudflare_quick_actions_cache_ttl_seconds']);
         $capacityTwo = collect($summary['results'])->firstWhere('scenario', 'concurrency-2');
         $this->assertSame(2, $capacityTwo['configured_concurrency']);
         $this->assertSame(25.0, $capacityTwo['resources']['application']['cpu_utilization_pct']);
-        $this->assertStringContainsString('Capacity sweep observations', (string) file_get_contents($this->runsPath."/{$runId}/REPORT.md"));
-        $this->assertStringContainsString('Cloudflare Quick Actions cache disabled with `cacheTTL=0`', (string) file_get_contents($this->runsPath."/{$runId}/REPORT.md"));
+        $report = (string) file_get_contents($this->runsPath."/{$runId}/REPORT.md");
+        $this->assertStringContainsString('Capacity sweep observations', $report);
+        $this->assertStringContainsString('Cloudflare Quick Actions cache disabled with `cacheTTL=0`', $report);
+        $this->assertStringContainsString('No CPU values are estimated or simulated', $report);
+        $this->assertStringNotContainsString('Observed CPU %', $report);
+        $this->assertSame(
+            'CPU counters are retained for diagnostics but omitted from comparative report tables because short-lived application descendants may be undercounted; values are never estimated or simulated.',
+            $summary['methodology']['cpu_reporting'],
+        );
 
         $lines = file($this->runsPath."/{$runId}/summary.csv", FILE_IGNORE_NEW_LINES);
         $this->assertNotFalse($lines);

@@ -12,7 +12,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
-        "bladepdf/laravel": "1.0.3",
+        "bladepdf/laravel": "1.0.4",
         "bladepdf/spatie-laravel-pdf-driver": "1.0.3",
         "dompdf/dompdf": "3.1.6",
         "laravel/framework": "13.24.0",

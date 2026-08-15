@@ -94,6 +94,7 @@ final class ReportGenerator
                 'load_generation' => 'fixed in-process worker pool with no application queue',
                 'queue_observability' => 'Gotenberg queue depth is sampled from its OTEL gauge; managed-provider internal queues are not observable.',
                 'latency_variability' => 'sample standard deviation and coefficient of variation over successful observations',
+                'cpu_reporting' => 'CPU counters are retained for diagnostics but omitted from comparative report tables because short-lived application descendants may be undercounted; values are never estimated or simulated.',
             ],
             'results' => $rows,
             'fidelity_review' => $review,
@@ -193,6 +194,8 @@ final class ReportGenerator
             '',
             '> Provider-side resource consumption is not observable, so only application-side usage was measured for managed services.',
             '',
+            '> CPU counters are retained in the raw artifacts for diagnostics, but are omitted from comparative tables because short-lived application child processes may exit between samples and be undercounted. No CPU values are estimated or simulated.',
+            '',
         ];
 
         $coreRows = array_values(array_filter(
@@ -276,8 +279,8 @@ final class ReportGenerator
         $lines = [
             '## '.$heading,
             '',
-            '| Renderer | Variant | Template | Scenario / first-observation label | Concurrency | Success | Fail | Timeout | p50 ms | p95 ms | p99 ms | CV % | Peak in-flight | PDF KiB | Successful PDF/s | Observed CPU % | App peak MiB | Render service peak MiB | Queue peak |',
-            '|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|',
+            '| Renderer | Variant | Template | Scenario / first-observation label | Concurrency | Success | Fail | Timeout | p50 ms | p95 ms | p99 ms | CV % | Peak in-flight | PDF KiB | Successful PDF/s | App peak MiB | Render service peak MiB | Queue peak |',
+            '|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|',
         ];
 
         foreach ($rows as $row) {
@@ -289,12 +292,11 @@ final class ReportGenerator
                 $scenario .= ' [over declared plan limit '.$row['declared_concurrency_limit'].']';
             }
             $lines[] = sprintf(
-                '| %s | %s | %s | %s | %d | %d/%d | %d | %d | %s | %s | %s | %s | %d | %s | %s | %s | %s | %s | %s |',
+                '| %s | %s | %s | %s | %d | %d/%d | %d | %d | %s | %s | %s | %s | %d | %s | %s | %s | %s | %s |',
                 $row['renderer'], $row['variant'], $row['template'], $scenario, $row['concurrency'], $row['successful'], $row['attempted'],
                 $row['failures'], $row['timeouts'], $this->number($row['p50_ms']), $this->number($row['p95_ms']),
                 $this->number($row['p99_ms']), $this->number($row['cv_pct']), $row['peak_in_flight'],
                 $this->bytesToUnit($row['mean_pdf_bytes']), $this->number($row['successful_throughput']),
-                $this->number($row['resources']['observed_cpu_utilization_pct'] ?? null),
                 $this->bytesToUnit($row['resources']['application']['aggregate_rss_bytes'] ?? null, 1_048_576),
                 $this->bytesToUnit($row['resources']['render_service']['memory_bytes'] ?? null, 1_048_576),
                 $this->number($row['resources']['render_service']['queue_size'] ?? null),

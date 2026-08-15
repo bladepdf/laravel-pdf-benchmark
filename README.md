@@ -166,7 +166,7 @@ The harness samples worker process trees from `/proc` and Docker cgroup counters
 
 Preflight also records Docker image sizes. Run artifacts and benchmark temporary storage are measured separately. These component boundaries matter more than combining unrelated local and provider resources into one number.
 
-CPU seconds are normalized by block duration and detected logical CPUs. Each measured block reports configured concurrency, peak and average in-flight renders, worker-pool utilization, sample standard deviation, and latency coefficient of variation. Gotenberg 8.34 exports `chromium_requests_active` and `chromium_requests_queue_size` through its internal OpenTelemetry Prometheus endpoint; the harness samples both without exposing the endpoint outside the Compose network. DOMPDF and standard Browsershot have no separate render-service queue. Managed-provider queue depth is not observable and remains `null`.
+CPU seconds are normalized by block duration and detected logical CPUs and retained in raw artifacts for diagnostics. Because short-lived Node or Chromium descendants may exit between `/proc` samples, their CPU can be undercounted; CPU values are therefore omitted from comparative `REPORT.md` tables and are never estimated or simulated. Each measured block reports configured concurrency, peak and average in-flight renders, worker-pool utilization, sample standard deviation, and latency coefficient of variation. Gotenberg 8.34 exports `chromium_requests_active` and `chromium_requests_queue_size` through its internal OpenTelemetry Prometheus endpoint; the harness samples both without exposing the endpoint outside the Compose network. DOMPDF and standard Browsershot have no separate render-service queue. Managed-provider queue depth is not observable and remains `null`.
 
 ## Server capacity experiments
 
@@ -188,7 +188,7 @@ make benchmark PROFILE=capacity CONCURRENCY=1,2,4,8 ITERATIONS=100 \
   RUN=managed-scale-c8
 ```
 
-The default capacity sweep is `1,2,4,8,12,16`; both the levels and iteration count are stored in `manifest.json` and are part of resume compatibility. The report shows the observed throughput peak, highest failure-free tested level, first failure/timeout level, CPU/RAM, Gotenberg queue peak, and latency variability. It deliberately does not infer that eight vCPU means eight safe concurrent renders or automatically assign a production-safe limit.
+The default capacity sweep is `1,2,4,8,12,16`; both the levels and iteration count are stored in `manifest.json` and are part of resume compatibility. The report shows the observed throughput peak, highest failure-free tested level, first failure/timeout level, RAM, Gotenberg queue peak, and latency variability. It deliberately does not infer that eight vCPU means eight safe concurrent renders or automatically assign a production-safe limit.
 
 Run each physical server, CPU class, and managed plan as a separate run. A practical publication set can include a small shared-vCPU budget host, a larger shared-vCPU budget host, and matching dedicated-vCPU control hosts. Shared-vCPU data answers "what did this inexpensive server deliver?"; dedicated-vCPU controls help expose noisy-neighbor variability. Do not merge those observations or describe shared-vCPU output as hardware-normalized.
 
