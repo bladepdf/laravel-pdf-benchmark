@@ -44,8 +44,13 @@ final class Redactor
 
     private function isSensitive(string $key): bool
     {
-        $key = strtolower($key);
+        $key = preg_replace('/([a-z0-9])([A-Z])/', '$1_$2', $key) ?? $key;
+        $key = strtolower(preg_replace('/[^a-zA-Z0-9]+/', '_', $key) ?? $key);
+        $key = trim($key, '_');
 
-        return array_any(self::SENSITIVE_KEYS, fn (string $needle) => str_contains($key, $needle));
+        return array_any(self::SENSITIVE_KEYS, fn (string $needle) => preg_match(
+            '/(?:^|_)'.preg_quote($needle, '/').'(?:_|$)/',
+            $key,
+        ) === 1);
     }
 }
