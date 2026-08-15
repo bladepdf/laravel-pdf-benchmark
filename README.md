@@ -64,8 +64,8 @@ The dependency locks currently resolve the following primary versions:
 | Browsershot | 5.4.0 |
 | DOMPDF | 3.1.6 |
 | Puppeteer | 25.5.0 |
-| BladePDF Spatie driver | 1.0.1 |
-| `bladepdf/laravel` | 1.0.2 |
+| BladePDF Spatie driver | 1.0.3 |
+| `bladepdf/laravel` | 1.0.4 |
 | Gotenberg | 8.34.0 Chromium image |
 
 Composer and npm lock files are committed. Base images and Gotenberg use immutable multi-platform manifest digests in `Dockerfile` and `compose.yaml`. Preflight records the effective Git SHA/status, UTC time, CPU, RAM, kernel, architecture, Docker, PHP, Node, browser, Gotenberg and Composer package versions, along with the declared host/region/plan labels.
