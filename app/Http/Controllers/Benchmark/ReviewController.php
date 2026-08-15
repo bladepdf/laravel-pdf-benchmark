@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Benchmark;
 
 use App\Benchmark\RunStore;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -23,7 +24,7 @@ final class ReviewController extends Controller
         return response()->view('benchmark.review.index', compact('run', 'review', 'fidelity'));
     }
 
-    public function update(Request $request, string $run, RunStore $store): RedirectResponse
+    public function update(Request $request, string $run, RunStore $store): JsonResponse|RedirectResponse
     {
         $this->ensureEnabled();
         $validated = $request->validate([
@@ -36,22 +37,33 @@ final class ReviewController extends Controller
         abort_unless(is_file($path), 404);
         $review = json_decode((string) file_get_contents($path), true, flags: JSON_THROW_ON_ERROR);
         $found = false;
+        $reviewedAt = now('UTC')->toIso8601String();
         foreach ($review['entries'] as &$entry) {
             if (hash_equals($entry['key'], $validated['key'])) {
                 $entry['status'] = $validated['status'];
                 $entry['problem'] = $validated['problem'] ?? null;
                 $entry['note'] = $validated['note'] ?? null;
-                $entry['reviewed_at'] = now('UTC')->toIso8601String();
+                $entry['reviewed_at'] = $reviewedAt;
                 $found = true;
                 break;
             }
         }
         unset($entry);
         abort_unless($found, 404);
-        $review['updated_at'] = now('UTC')->toIso8601String();
+        $review['updated_at'] = $reviewedAt;
         $store->write($run, 'fidelity-review.json', $review);
 
-        return redirect()->route('benchmark.review', ['run' => $run])->with('saved', $validated['key']);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'saved' => true,
+                'key' => $validated['key'],
+                'reviewed_at' => $reviewedAt,
+            ]);
+        }
+
+        return redirect()
+            ->to(route('benchmark.review', ['run' => $run]).'#'.rawurlencode($validated['key']))
+            ->with('saved', $validated['key']);
     }
 
     public function artifact(string $run, string $path, RunStore $store): BinaryFileResponse
