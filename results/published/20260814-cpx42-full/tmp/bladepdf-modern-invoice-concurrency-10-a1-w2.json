@@ -1,0 +1,28 @@
+{
+    "run_id": "20260814-cpx42-full",
+    "renderer": "bladepdf",
+    "variant": "default",
+    "template": "modern-invoice",
+    "scenario": "concurrency-10",
+    "phase": "measured",
+    "asset_mode": "portable",
+    "attempt": 1,
+    "worker": 2,
+    "iterations": [
+        2,
+        12,
+        22,
+        32,
+        42,
+        52,
+        62,
+        72,
+        82,
+        92
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/tmp\/barrier-bladepdf-modern-invoice-concurrency-10-a1\/worker-2.ready",
+    "start_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/tmp\/barrier-bladepdf-modern-invoice-concurrency-10-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/tmp\/artifact-bladepdf-modern-invoice-portable-concurrency-10-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/raw\/attempts\/bladepdf__default__modern-invoice__portable__concurrency-10\/a1-w2.jsonl"
+}

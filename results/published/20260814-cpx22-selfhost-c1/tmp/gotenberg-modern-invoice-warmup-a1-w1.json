@@ -1,0 +1,23 @@
+{
+    "run_id": "20260814-cpx22-selfhost-c1",
+    "renderer": "gotenberg",
+    "variant": "default",
+    "template": "modern-invoice",
+    "scenario": "warmup",
+    "phase": "warmup",
+    "asset_mode": "portable",
+    "attempt": 1,
+    "worker": 1,
+    "iterations": [
+        1,
+        2,
+        3,
+        4,
+        5
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260814-cpx22-selfhost-c1\/tmp\/barrier-gotenberg-modern-invoice-warmup-a1\/worker-1.ready",
+    "start_path": "\/workspace\/results\/runs\/20260814-cpx22-selfhost-c1\/tmp\/barrier-gotenberg-modern-invoice-warmup-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260814-cpx22-selfhost-c1\/tmp\/artifact-gotenberg-modern-invoice-portable-warmup-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260814-cpx22-selfhost-c1\/raw\/attempts\/gotenberg__default__modern-invoice__portable__warmup\/a1-w1.jsonl"
+}

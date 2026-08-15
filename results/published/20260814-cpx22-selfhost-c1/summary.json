@@ -1,0 +1,1936 @@
+{
+    "schema_version": 1,
+    "run_id": "20260814-cpx22-selfhost-c1",
+    "generated_at": "2026-08-14T21:57:33+00:00",
+    "manifest": {
+        "schema_version": 1,
+        "run_id": "20260814-cpx22-selfhost-c1",
+        "profile": "capacity",
+        "seed": 20260809,
+        "created_at": "2026-08-14T21:49:13+00:00",
+        "renderers": [
+            "dompdf",
+            "browsershot",
+            "gotenberg",
+            "browsershot-persistent"
+        ],
+        "templates": [
+            "simple-invoice",
+            "modern-invoice"
+        ],
+        "matrix_options": {
+            "concurrency_levels": [
+                1
+            ],
+            "iterations": 100
+        },
+        "retry_policy": {
+            "application_attempts": 1,
+            "renderer_retries": 0
+        },
+        "environment": {
+            "collected_at": "2026-08-14T21:49:12+00:00",
+            "declared": {
+                "host_label": "hetzner-cpx22-budget",
+                "region": "Nuremberg, Germany",
+                "host_provider": "hetzner",
+                "host_instance_type": "CPX22",
+                "host_cpu_allocation": "shared",
+                "host_purpose": "budget",
+                "host_vcpu": "2",
+                "host_memory_mib": "3814",
+                "cloudflare_plan": "not-run",
+                "bladepdf_plan": "not-run",
+                "bladepdf_concurrency": "1"
+            },
+            "load_generation": {
+                "mode": "in-process-worker-pool",
+                "host_relation": "co-located-with-application",
+                "separate_host_in_timed_path": false,
+                "note": "Laravel workers generate load on the benchmark host. An external host may orchestrate the command, but is not the timed request generator."
+            },
+            "platform": {
+                "os_release": {
+                    "pretty_name": "Debian GNU/Linux 12 (bookworm)",
+                    "name": "Debian GNU/Linux",
+                    "version_id": "12",
+                    "version": "12 (bookworm)",
+                    "version_codename": "bookworm",
+                    "id": "debian",
+                    "home_url": "https://www.debian.org/",
+                    "support_url": "https://www.debian.org/support",
+                    "bug_report_url": "https://bugs.debian.org/"
+                },
+                "kernel": "6.8.0-137-generic",
+                "architecture": "x86_64",
+                "cpu_model": "AMD EPYC-Genoa Processor",
+                "cpu_logical": 2,
+                "memory_bytes": 3999674368
+            },
+            "runtime": {
+                "php": "8.4.1",
+                "node": "v22.16.0",
+                "npm": "10.9.2",
+                "composer": "Composer version 2.10.2 2026-07-01 11:24:45",
+                "chrome": "Chrome/151.0.7922.71"
+            },
+            "composer_packages": {
+                "laravel/framework": "v13.24.0",
+                "spatie/laravel-pdf": "2.12.0",
+                "spatie/browsershot": "5.4.0",
+                "dompdf/dompdf": "v3.1.6",
+                "bladepdf/spatie-laravel-pdf-driver": "v1.0.3",
+                "bladepdf/laravel": "v1.0.3"
+            },
+            "npm_packages": {
+                "puppeteer": "25.5.0",
+                "tailwindcss": "4.3.3",
+                "vite": "8.2.1",
+                "pixelmatch": "7.2.0",
+                "pngjs": "7.0.0"
+            },
+            "docker": {
+                "observable": true,
+                "version": "29.7.2",
+                "api_version": "1.55",
+                "images": {
+                    "app": {
+                        "id": "sha256:da607479dfd0",
+                        "repo_digests": [
+                            "laravel-pdf-benchmark@sha256:da607479dfd0214271ccfa67fdc7ce91c6e43bc47720fd6a1df205f06de525d6"
+                        ],
+                        "size_bytes": 805135387
+                    },
+                    "gotenberg": {
+                        "id": null,
+                        "repo_digests": [],
+                        "size_bytes": null
+                    }
+                },
+                "services": {
+                    "gotenberg": {
+                        "image": "gotenberg/gotenberg:8.34.0-chromium@sha256:e6b66c4553c7747f86fb41d012665c5ac114b46188f53d09080d217bcb16cee2",
+                        "command": [
+                            "gotenberg",
+                            "--chromium-auto-start=true",
+                            "--chromium-max-concurrency=6",
+                            "--chromium-max-queue-size=0"
+                        ],
+                        "platform": "linux",
+                        "cpu_limit": 0,
+                        "memory_limit_bytes": 0,
+                        "status": "running",
+                        "health": "healthy"
+                    },
+                    "chromium-persistent": {
+                        "image": "laravel-pdf-benchmark:local",
+                        "command": [
+                            "node",
+                            "scripts/start-persistent-browser.mjs"
+                        ],
+                        "platform": "linux",
+                        "cpu_limit": 0,
+                        "memory_limit_bytes": 0,
+                        "status": "running",
+                        "health": "healthy"
+                    }
+                }
+            },
+            "git": {
+                "sha": "b6d5d4d8fe01b9088f6af8a91601960f9185aeef",
+                "branch": "",
+                "dirty": false
+            }
+        }
+    },
+    "methodology": {
+        "percentile": "nearest-rank",
+        "cache": "disabled",
+        "retries": 0,
+        "visual_reference": "browsershot from the same run; not an automatic correctness oracle",
+        "load_generation": "fixed in-process worker pool with no application queue",
+        "queue_observability": "Gotenberg queue depth is sampled from its OTEL gauge; managed-provider internal queues are not observable.",
+        "latency_variability": "sample standard deviation and coefficient of variation over successful observations"
+    },
+    "results": [
+        {
+            "renderer": "browsershot",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "first",
+            "phase": "first",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 0.473255,
+            "cold_label": "fresh browser per render",
+            "topology": "application-descendant",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 470.429,
+            "p95_ms": 470.429,
+            "p99_ms": 470.429,
+            "mean_ms": 470.429,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 160537,
+            "attempted_throughput": 2.11302574721873,
+            "successful_throughput": 2.11302574721873,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9940285892383599,
+            "worker_utilization_pct": 99.40285892383599,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot__default__modern-invoice__portable__first",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 639508480,
+                    "process_count": 10,
+                    "php_rss_bytes": 61116416,
+                    "node_rss_bytes": 80805888,
+                    "chrome_rss_bytes": 498438144,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.53,
+                    "cpu_utilization_pct": 55.99518230129634
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 113009,
+                    "run_artifacts_bytes_after_block": 1293841
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.175365
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 55.99518230129634
+            }
+        },
+        {
+            "renderer": "browsershot",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-1",
+            "phase": "measured",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 45.931758,
+            "cold_label": "fresh browser per render",
+            "topology": "application-descendant",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 456.921,
+            "p95_ms": 504.144,
+            "p99_ms": 543.253,
+            "mean_ms": 458.79322000000025,
+            "stddev_ms": 29.97945929545897,
+            "cv_pct": 6.5344163750848265,
+            "mean_pdf_bytes": 160537,
+            "attempted_throughput": 2.1771428822733063,
+            "successful_throughput": 2.1771428822733063,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9988583933582517,
+            "worker_utilization_pct": 99.88583933582517,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot__default__modern-invoice__portable__concurrency-1",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 644812800,
+                    "process_count": 10,
+                    "php_rss_bytes": 61542400,
+                    "node_rss_bytes": 86818816,
+                    "chrome_rss_bytes": 499789824,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.96,
+                    "cpu_utilization_pct": 1.045028583491187
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 113009,
+                    "run_artifacts_bytes_after_block": 2448957
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.163225
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 1.045028583491187
+            }
+        },
+        {
+            "renderer": "browsershot",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "warmup",
+            "phase": "warmup",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 2.221826,
+            "cold_label": "fresh browser per render",
+            "topology": "application-descendant",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 5,
+            "successful": 5,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 452.962,
+            "p95_ms": 463.171,
+            "p99_ms": 463.171,
+            "mean_ms": 443.166,
+            "stddev_ms": 22.524881542418807,
+            "cv_pct": 5.0827187876368685,
+            "mean_pdf_bytes": 160537,
+            "attempted_throughput": 2.2504012465422583,
+            "successful_throughput": 2.2504012465422583,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9973013188251465,
+            "worker_utilization_pct": 99.73013188251466,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot__default__modern-invoice__portable__warmup",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 633401344,
+                    "process_count": 10,
+                    "php_rss_bytes": 61181952,
+                    "node_rss_bytes": 83484672,
+                    "chrome_rss_bytes": 493805568,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.54,
+                    "cpu_utilization_pct": 12.152166731328196
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 113009,
+                    "run_artifacts_bytes_after_block": 690475
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.172759
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 5,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 12.152166731328196
+            }
+        },
+        {
+            "renderer": "browsershot",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "first",
+            "phase": "first",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 0.461875,
+            "cold_label": "fresh browser per render",
+            "topology": "application-descendant",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 457.3,
+            "p95_ms": 457.3,
+            "p99_ms": 457.3,
+            "mean_ms": 457.3,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 62885,
+            "attempted_throughput": 2.165087956698241,
+            "successful_throughput": 2.165087956698241,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9900947225981056,
+            "worker_utilization_pct": 99.00947225981056,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot__default__simple-invoice__portable__first",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 605540352,
+                    "process_count": 10,
+                    "php_rss_bytes": 60235776,
+                    "node_rss_bytes": 82038784,
+                    "chrome_rss_bytes": 463667200,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.47000000000000003,
+                    "cpu_utilization_pct": 50.87956698240866
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 10581,
+                    "run_artifacts_bytes_after_block": 2765850
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.163086
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 50.87956698240866
+            }
+        },
+        {
+            "renderer": "browsershot",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-1",
+            "phase": "measured",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 44.625683,
+            "cold_label": "fresh browser per render",
+            "topology": "application-descendant",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 446.752,
+            "p95_ms": 489.028,
+            "p99_ms": 505.905,
+            "mean_ms": 445.8183799999999,
+            "stddev_ms": 28.442186930854962,
+            "cv_pct": 6.379769925783448,
+            "mean_pdf_bytes": 62885,
+            "attempted_throughput": 2.2408620614277206,
+            "successful_throughput": 2.2408620614277206,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9990174940291667,
+            "worker_utilization_pct": 99.90174940291668,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot__default__simple-invoice__portable__concurrency-1",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 644046848,
+                    "process_count": 10,
+                    "php_rss_bytes": 60604416,
+                    "node_rss_bytes": 85852160,
+                    "chrome_rss_bytes": 504127488,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.8,
+                    "cpu_utilization_pct": 0.8963448245710883
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 10582,
+                    "run_artifacts_bytes_after_block": 1487360
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.153705
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 0.8963448245710883
+            }
+        },
+        {
+            "renderer": "browsershot",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "warmup",
+            "phase": "warmup",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 2.355219,
+            "cold_label": "fresh browser per render",
+            "topology": "application-descendant",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 5,
+            "successful": 5,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 471.268,
+            "p95_ms": 500.275,
+            "p99_ms": 500.275,
+            "mean_ms": 469.7664,
+            "stddev_ms": 26.737180700290743,
+            "cv_pct": 5.691590692797685,
+            "mean_pdf_bytes": 62885,
+            "attempted_throughput": 2.12294483018352,
+            "successful_throughput": 2.12294483018352,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9972881502739235,
+            "worker_utilization_pct": 99.72881502739234,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot__default__simple-invoice__portable__warmup",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 637833216,
+                    "process_count": 10,
+                    "php_rss_bytes": 60489728,
+                    "node_rss_bytes": 82415616,
+                    "chrome_rss_bytes": 497709056,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.55,
+                    "cpu_utilization_pct": 11.676196566009361
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 10582,
+                    "run_artifacts_bytes_after_block": 1721905
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.185136
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 5,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 11.676196566009361
+            }
+        },
+        {
+            "renderer": "browsershot-persistent",
+            "variant": "persistent",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "first",
+            "phase": "first",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 0.420617,
+            "cold_label": "first connection to persistent browser",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 415.674,
+            "p95_ms": 415.674,
+            "p99_ms": 415.674,
+            "mean_ms": 415.674,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 162150,
+            "attempted_throughput": 2.3774597793241834,
+            "successful_throughput": 2.3774597793241834,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9882482163108005,
+            "worker_utilization_pct": 98.82482163108006,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot-persistent__persistent__modern-invoice__portable__first",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 139980800,
+                    "process_count": 3,
+                    "php_rss_bytes": 59928576,
+                    "node_rss_bytes": 80052224,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.28,
+                    "cpu_utilization_pct": 33.28443691053857
+                },
+                "render_service": {
+                    "service": "chromium-persistent",
+                    "memory_bytes": 231878656,
+                    "memory_limit_bytes": 3999674368,
+                    "pids": 123,
+                    "cpu_seconds_total": 69.268002,
+                    "telemetry_observable": false,
+                    "cpu_seconds_delta": 0.23135800000000017,
+                    "cpu_utilization_pct": 27.50221698124424
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 113100,
+                    "run_artifacts_bytes_after_block": 2666719
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.173643
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 60.786653891782805
+            }
+        },
+        {
+            "renderer": "browsershot-persistent",
+            "variant": "persistent",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-1",
+            "phase": "measured",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 39.967731,
+            "cold_label": "first connection to persistent browser",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 395.77,
+            "p95_ms": 452.169,
+            "p99_ms": 471.644,
+            "mean_ms": 399.0917599999999,
+            "stddev_ms": 29.02437050122402,
+            "cv_pct": 7.2726058040446695,
+            "mean_pdf_bytes": 162150,
+            "attempted_throughput": 2.5020184408266757,
+            "successful_throughput": 2.5020184408266757,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9985349431019738,
+            "worker_utilization_pct": 99.85349431019738,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot-persistent__persistent__modern-invoice__portable__concurrency-1",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 152526848,
+                    "process_count": 3,
+                    "php_rss_bytes": 61771776,
+                    "node_rss_bytes": 90951680,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.7000000000000001,
+                    "cpu_utilization_pct": 0.8757064542893366
+                },
+                "render_service": {
+                    "service": "chromium-persistent",
+                    "memory_bytes": 416722944,
+                    "memory_limit_bytes": 3999674368,
+                    "pids": 247,
+                    "cpu_seconds_total": 37.989704,
+                    "telemetry_observable": false,
+                    "cpu_seconds_delta": 27.761380000000003,
+                    "cpu_utilization_pct": 34.729742351398436
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 113101,
+                    "run_artifacts_bytes_after_block": 1855575
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.132172
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 35.60544880568777
+            }
+        },
+        {
+            "renderer": "browsershot-persistent",
+            "variant": "persistent",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "warmup",
+            "phase": "warmup",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 1.967462,
+            "cold_label": "first connection to persistent browser",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 5,
+            "successful": 5,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 376.794,
+            "p95_ms": 466.029,
+            "p99_ms": 466.029,
+            "mean_ms": 392.19559999999996,
+            "stddev_ms": 42.49751189540395,
+            "cv_pct": 10.835795173480772,
+            "mean_pdf_bytes": 162150,
+            "attempted_throughput": 2.541345144150179,
+            "successful_throughput": 2.541345144150179,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9967043836170659,
+            "worker_utilization_pct": 99.67043836170659,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot-persistent__persistent__modern-invoice__portable__warmup",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 152752128,
+                    "process_count": 3,
+                    "php_rss_bytes": 62119936,
+                    "node_rss_bytes": 90664960,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.30000000000000004,
+                    "cpu_utilization_pct": 7.6240354324505395
+                },
+                "render_service": {
+                    "service": "chromium-persistent",
+                    "memory_bytes": 280027136,
+                    "memory_limit_bytes": 3999674368,
+                    "pids": 166,
+                    "cpu_seconds_total": 2.645968,
+                    "telemetry_observable": false,
+                    "cpu_seconds_delta": 1.24175,
+                    "cpu_utilization_pct": 31.557153327484848
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 113101,
+                    "run_artifacts_bytes_after_block": 179074
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.142921
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 5,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 39.18118875993539
+            }
+        },
+        {
+            "renderer": "browsershot-persistent",
+            "variant": "persistent",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "first",
+            "phase": "first",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 0.415099,
+            "cold_label": "first connection to persistent browser",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 414.573,
+            "p95_ms": 414.573,
+            "p99_ms": 414.573,
+            "mean_ms": 414.573,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 62990,
+            "attempted_throughput": 2.4090638618739146,
+            "successful_throughput": 2.4090638618739146,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9987328324086543,
+            "worker_utilization_pct": 99.87328324086543,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot-persistent__persistent__simple-invoice__portable__first",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 140238848,
+                    "process_count": 3,
+                    "php_rss_bytes": 59973632,
+                    "node_rss_bytes": 80265216,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.28,
+                    "cpu_utilization_pct": 33.726894066234806
+                },
+                "render_service": {
+                    "service": "chromium-persistent",
+                    "memory_bytes": 194834432,
+                    "memory_limit_bytes": 3999674368,
+                    "pids": 124,
+                    "cpu_seconds_total": 8.82198,
+                    "telemetry_observable": false,
+                    "cpu_seconds_delta": 0.13601000000000063,
+                    "cpu_utilization_pct": 16.38283879267363
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 10674,
+                    "run_artifacts_bytes_after_block": 1491310
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.175618
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 50.10973285890844
+            }
+        },
+        {
+            "renderer": "browsershot-persistent",
+            "variant": "persistent",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-1",
+            "phase": "measured",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 39.156215,
+            "cold_label": "first connection to persistent browser",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 384.657,
+            "p95_ms": 433.827,
+            "p99_ms": 454.592,
+            "mean_ms": 391.0311000000001,
+            "stddev_ms": 24.147211176155704,
+            "cv_pct": 6.175266155596242,
+            "mean_pdf_bytes": 62990,
+            "attempted_throughput": 2.5538729930867934,
+            "successful_throughput": 2.5538729930867934,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9986437657470214,
+            "worker_utilization_pct": 99.86437657470213,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot-persistent__persistent__simple-invoice__portable__concurrency-1",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 148553728,
+                    "process_count": 3,
+                    "php_rss_bytes": 63508480,
+                    "node_rss_bytes": 87920640,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.55,
+                    "cpu_utilization_pct": 0.7023150730988682
+                },
+                "render_service": {
+                    "service": "chromium-persistent",
+                    "memory_bytes": 417325056,
+                    "memory_limit_bytes": 3999674368,
+                    "pids": 247,
+                    "cpu_seconds_total": 65.63002,
+                    "telemetry_observable": false,
+                    "cpu_seconds_delta": 27.016884000000005,
+                    "cpu_utilization_pct": 34.49884520247936
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 10674,
+                    "run_artifacts_bytes_after_block": 1989370
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.173314
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 35.201160275578225
+            }
+        },
+        {
+            "renderer": "browsershot-persistent",
+            "variant": "persistent",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "warmup",
+            "phase": "warmup",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 1.871152,
+            "cold_label": "first connection to persistent browser",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 5,
+            "successful": 5,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 376.534,
+            "p95_ms": 391.515,
+            "p99_ms": 391.515,
+            "mean_ms": 372.871,
+            "stddev_ms": 17.03864498720481,
+            "cv_pct": 4.5695817017694615,
+            "mean_pdf_bytes": 62990,
+            "attempted_throughput": 2.6721506323377255,
+            "successful_throughput": 2.6721506323377255,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9963674784304001,
+            "worker_utilization_pct": 99.63674784304001,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot-persistent__persistent__simple-invoice__portable__warmup",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 143601664,
+                    "process_count": 3,
+                    "php_rss_bytes": 60702720,
+                    "node_rss_bytes": 83513344,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.28,
+                    "cpu_utilization_pct": 7.482021770545632
+                },
+                "render_service": {
+                    "service": "chromium-persistent",
+                    "memory_bytes": 261681152,
+                    "memory_limit_bytes": 3999674368,
+                    "pids": 165,
+                    "cpu_seconds_total": 4.38577,
+                    "telemetry_observable": false,
+                    "cpu_seconds_delta": 1.0767039999999999,
+                    "cpu_utilization_pct": 28.771152744405583
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 10674,
+                    "run_artifacts_bytes_after_block": 286789
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.173956
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 5,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 36.25317451495121
+            }
+        },
+        {
+            "renderer": "dompdf",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "first",
+            "phase": "first",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 0.131513,
+            "cold_label": "fresh worker",
+            "topology": "application-process",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 129.224,
+            "p95_ms": 129.224,
+            "p99_ms": 129.224,
+            "mean_ms": 129.224,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 25263,
+            "attempted_throughput": 7.603811030088281,
+            "successful_throughput": 7.603811030088281,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9825948765521278,
+            "worker_utilization_pct": 98.25948765521278,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "dompdf__default__modern-invoice__portable__first",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 68812800,
+                    "process_count": 1,
+                    "php_rss_bytes": 68812800,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.11999999999999997,
+                    "cpu_utilization_pct": 45.62286618052967
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 2478011
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.184454
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 45.62286618052967
+            }
+        },
+        {
+            "renderer": "dompdf",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-1",
+            "phase": "measured",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 7.611876,
+            "cold_label": "fresh worker",
+            "topology": "application-process",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 73.279,
+            "p95_ms": 95.261,
+            "p99_ms": 105.83,
+            "mean_ms": 75.6827,
+            "stddev_ms": 9.445921896498376,
+            "cv_pct": 12.48095257766752,
+            "mean_pdf_bytes": 25263,
+            "attempted_throughput": 13.137365874063109,
+            "successful_throughput": 13.137365874063109,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.994271320236956,
+            "worker_utilization_pct": 99.42713202369559,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "dompdf__default__modern-invoice__portable__concurrency-1",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 79020032,
+                    "process_count": 1,
+                    "php_rss_bytes": 79020032,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 7.35,
+                    "cpu_utilization_pct": 48.279819587181926
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 845157
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.173208
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 48.279819587181926
+            }
+        },
+        {
+            "renderer": "dompdf",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "warmup",
+            "phase": "warmup",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.427889,
+            "cold_label": "fresh worker",
+            "topology": "application-process",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 5,
+            "successful": 5,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 80.952,
+            "p95_ms": 111.112,
+            "p99_ms": 111.112,
+            "mean_ms": 84.6982,
+            "stddev_ms": 15.120890125915205,
+            "cv_pct": 17.852669981080123,
+            "mean_pdf_bytes": 25263,
+            "attempted_throughput": 11.685273517197217,
+            "successful_throughput": 11.685273517197217,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9897216334142733,
+            "worker_utilization_pct": 98.97216334142733,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "dompdf__default__modern-invoice__portable__warmup",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 75517952,
+                    "process_count": 1,
+                    "php_rss_bytes": 75517952,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.4099999999999999,
+                    "cpu_utilization_pct": 47.90962142050858
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 2512057
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.173563
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 5,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 47.90962142050858
+            }
+        },
+        {
+            "renderer": "dompdf",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "first",
+            "phase": "first",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 0.172021,
+            "cold_label": "fresh worker",
+            "topology": "application-process",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 166.921,
+            "p95_ms": 166.921,
+            "p99_ms": 166.921,
+            "mean_ms": 166.921,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 28491,
+            "attempted_throughput": 5.813243731869946,
+            "successful_throughput": 5.813243731869946,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9703524569674632,
+            "worker_utilization_pct": 97.03524569674632,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "dompdf__default__simple-invoice__portable__first",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 77414400,
+                    "process_count": 1,
+                    "php_rss_bytes": 77414400,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.16999999999999998,
+                    "cpu_utilization_pct": 49.41257172089454
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 2699194
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.154244
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 49.41257172089454
+            }
+        },
+        {
+            "renderer": "dompdf",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-1",
+            "phase": "measured",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 14.765743,
+            "cold_label": "fresh worker",
+            "topology": "application-process",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 144.491,
+            "p95_ms": 165.174,
+            "p99_ms": 171.4,
+            "mean_ms": 147.28230000000005,
+            "stddev_ms": 9.496664934532957,
+            "cv_pct": 6.4479336176396975,
+            "mean_pdf_bytes": 28491,
+            "attempted_throughput": 6.772432650358333,
+            "successful_throughput": 6.772432650358333,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9974594573398714,
+            "worker_utilization_pct": 99.74594573398714,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "dompdf__default__simple-invoice__portable__concurrency-1",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 92143616,
+                    "process_count": 1,
+                    "php_rss_bytes": 92143616,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 14.61,
+                    "cpu_utilization_pct": 49.472620510867614
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 1650159
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.166085
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 49.472620510867614
+            }
+        },
+        {
+            "renderer": "dompdf",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "warmup",
+            "phase": "warmup",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.823413,
+            "cold_label": "fresh worker",
+            "topology": "application-process",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 5,
+            "successful": 5,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 150.141,
+            "p95_ms": 238.909,
+            "p99_ms": 238.909,
+            "mean_ms": 163.605,
+            "stddev_ms": 42.477903214494944,
+            "cv_pct": 25.96369500595639,
+            "mean_pdf_bytes": 28491,
+            "attempted_throughput": 6.072286932559967,
+            "successful_throughput": 6.072286932559967,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9934565036014734,
+            "worker_utilization_pct": 99.34565036014735,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "dompdf__default__simple-invoice__portable__warmup",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 89616384,
+                    "process_count": 1,
+                    "php_rss_bytes": 89616384,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.77,
+                    "cpu_utilization_pct": 46.75660938071175
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 365006
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.163204
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 5,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 46.75660938071175
+            }
+        },
+        {
+            "renderer": "gotenberg",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "first",
+            "phase": "first",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 0.246294,
+            "cold_label": "first request after controlled container restart",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 245.047,
+            "p95_ms": 245.047,
+            "p99_ms": 245.047,
+            "mean_ms": 245.047,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 146708,
+            "attempted_throughput": 4.060188230326358,
+            "successful_throughput": 4.060188230326358,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9949369452767829,
+            "worker_utilization_pct": 99.49369452767829,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "gotenberg__default__modern-invoice__portable__first",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 61440000,
+                    "process_count": 1,
+                    "php_rss_bytes": 61440000,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.01999999999999999,
+                    "cpu_utilization_pct": 4.0601882303263555
+                },
+                "render_service": {
+                    "service": "gotenberg",
+                    "memory_bytes": 162791424,
+                    "memory_limit_bytes": 3999674368,
+                    "pids": 91,
+                    "cpu_seconds_total": 0.753876,
+                    "telemetry_observable": true,
+                    "active_requests": 1,
+                    "queue_size": 1,
+                    "cpu_seconds_delta": 0.04522400000000004,
+                    "cpu_utilization_pct": 9.180897626413968
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 2662597
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.152904
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 13.241085856740323
+            }
+        },
+        {
+            "renderer": "gotenberg",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-1",
+            "phase": "measured",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 25.25904,
+            "cold_label": "first request after controlled container restart",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 242.987,
+            "p95_ms": 302.844,
+            "p99_ms": 332.027,
+            "mean_ms": 251.76195999999996,
+            "stddev_ms": 49.34712119977673,
+            "cv_pct": 19.600705841254467,
+            "mean_pdf_bytes": 146708,
+            "attempted_throughput": 3.9589786468527706,
+            "successful_throughput": 3.9589786468527706,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9967202237298012,
+            "worker_utilization_pct": 99.67202237298012,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "gotenberg__default__modern-invoice__portable__concurrency-1",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 107204608,
+                    "process_count": 1,
+                    "php_rss_bytes": 107204608,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.4,
+                    "cpu_utilization_pct": 0.7917957293705542
+                },
+                "render_service": {
+                    "service": "gotenberg",
+                    "memory_bytes": 378949632,
+                    "memory_limit_bytes": 3999674368,
+                    "pids": 112,
+                    "cpu_seconds_total": 48.373115,
+                    "telemetry_observable": true,
+                    "active_requests": 1,
+                    "queue_size": 1,
+                    "cpu_seconds_delta": 38.416591,
+                    "cpu_utilization_pct": 76.04523172693816
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 1129286
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.205634
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 76.8370274563087
+            }
+        },
+        {
+            "renderer": "gotenberg",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "warmup",
+            "phase": "warmup",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 1.198066,
+            "cold_label": "first request after controlled container restart",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 5,
+            "successful": 5,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 227.591,
+            "p95_ms": 277.984,
+            "p99_ms": 277.984,
+            "mean_ms": 238.2394,
+            "stddev_ms": 23.110966472651015,
+            "cv_pct": 9.700732319108853,
+            "mean_pdf_bytes": 146708,
+            "attempted_throughput": 4.173392784704682,
+            "successful_throughput": 4.173392784704682,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9942665929923725,
+            "worker_utilization_pct": 99.42665929923726,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "gotenberg__default__modern-invoice__portable__warmup",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 63946752,
+                    "process_count": 1,
+                    "php_rss_bytes": 63946752,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.04000000000000001,
+                    "cpu_utilization_pct": 1.6693571138818732
+                },
+                "render_service": {
+                    "service": "gotenberg",
+                    "memory_bytes": 207904768,
+                    "memory_limit_bytes": 3999674368,
+                    "pids": 99,
+                    "cpu_seconds_total": 5.52187,
+                    "telemetry_observable": true,
+                    "active_requests": 1,
+                    "queue_size": 1,
+                    "cpu_seconds_delta": 1.5783329999999998,
+                    "cpu_utilization_pct": 65.87003554061293
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 520865
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.163484
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 5,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 67.5393926544948
+            }
+        },
+        {
+            "renderer": "gotenberg",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "first",
+            "phase": "first",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 0.252009,
+            "cold_label": "first request after controlled container restart",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 250.23,
+            "p95_ms": 250.23,
+            "p99_ms": 250.23,
+            "mean_ms": 250.23,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 31379,
+            "attempted_throughput": 3.968112249959327,
+            "successful_throughput": 3.968112249959327,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9929407283073225,
+            "worker_utilization_pct": 99.29407283073225,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "gotenberg__default__simple-invoice__portable__first",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 61218816,
+                    "process_count": 1,
+                    "php_rss_bytes": 61218816,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.04999999999999999,
+                    "cpu_utilization_pct": 9.920280624898316
+                },
+                "render_service": {
+                    "service": "gotenberg",
+                    "memory_bytes": 165384192,
+                    "memory_limit_bytes": 3999674368,
+                    "pids": 90,
+                    "cpu_seconds_total": 1.047064,
+                    "telemetry_observable": true,
+                    "active_requests": 0,
+                    "queue_size": 0,
+                    "cpu_seconds_delta": 0.352673,
+                    "cpu_utilization_pct": 69.9723025764953
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 214525
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.163571
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 79.8925832013936
+            }
+        },
+        {
+            "renderer": "gotenberg",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-1",
+            "phase": "measured",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 21.961738,
+            "cold_label": "first request after controlled container restart",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 213.19,
+            "p95_ms": 251.023,
+            "p99_ms": 255.692,
+            "mean_ms": 219.0833699999998,
+            "stddev_ms": 44.52227207068913,
+            "cv_pct": 20.322068293311887,
+            "mean_pdf_bytes": 31379,
+            "attempted_throughput": 4.553373690187907,
+            "successful_throughput": 4.553373690187907,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.997568452915702,
+            "worker_utilization_pct": 99.7568452915702,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "gotenberg__default__simple-invoice__portable__concurrency-1",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 70017024,
+                    "process_count": 1,
+                    "php_rss_bytes": 70017024,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.29,
+                    "cpu_utilization_pct": 0.6602391850772465
+                },
+                "render_service": {
+                    "service": "gotenberg",
+                    "memory_bytes": 253702144,
+                    "memory_limit_bytes": 3999674368,
+                    "pids": 127,
+                    "cpu_seconds_total": 87.043946,
+                    "telemetry_observable": true,
+                    "active_requests": 1,
+                    "queue_size": 1,
+                    "cpu_seconds_delta": 33.311415000000004,
+                    "cpu_utilization_pct": 75.83966032196543
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 2157419
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.153197
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 76.49989950704267
+            }
+        },
+        {
+            "renderer": "gotenberg",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "warmup",
+            "phase": "warmup",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 1.034953,
+            "cold_label": "first request after controlled container restart",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 5,
+            "successful": 5,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 203.959,
+            "p95_ms": 225.796,
+            "p99_ms": 225.796,
+            "mean_ms": 206.4438,
+            "stddev_ms": 13.44614205636695,
+            "cv_pct": 6.51322154328052,
+            "mean_pdf_bytes": 31379,
+            "attempted_throughput": 4.831137259373131,
+            "successful_throughput": 4.831137259373131,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9973583341465747,
+            "worker_utilization_pct": 99.73583341465748,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "gotenberg__default__simple-invoice__portable__warmup",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 61693952,
+                    "process_count": 1,
+                    "php_rss_bytes": 61693952,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.03999999999999998,
+                    "cpu_utilization_pct": 1.9324549037492513
+                },
+                "render_service": {
+                    "service": "gotenberg",
+                    "memory_bytes": 225443840,
+                    "memory_limit_bytes": 3999674368,
+                    "pids": 107,
+                    "cpu_seconds_total": 3.305908,
+                    "telemetry_observable": true,
+                    "active_requests": 1,
+                    "queue_size": 1,
+                    "cpu_seconds_delta": 1.526186,
+                    "cpu_utilization_pct": 73.73214049333642
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 327517
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.163713
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 5,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 75.66459539708566
+            }
+        }
+    ],
+    "fidelity_review": null,
+    "costs": null,
+    "cost_note": "No local, uncommitted pricing snapshot was provided."
+}

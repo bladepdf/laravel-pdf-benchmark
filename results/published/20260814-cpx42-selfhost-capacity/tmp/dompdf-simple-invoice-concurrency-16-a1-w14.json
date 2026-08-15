@@ -1,0 +1,24 @@
+{
+    "run_id": "20260814-cpx42-selfhost-capacity",
+    "renderer": "dompdf",
+    "variant": "default",
+    "template": "simple-invoice",
+    "scenario": "concurrency-16",
+    "phase": "measured",
+    "asset_mode": "portable",
+    "attempt": 1,
+    "worker": 14,
+    "iterations": [
+        14,
+        30,
+        46,
+        62,
+        78,
+        94
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260814-cpx42-selfhost-capacity\/tmp\/barrier-dompdf-simple-invoice-concurrency-16-a1\/worker-14.ready",
+    "start_path": "\/workspace\/results\/runs\/20260814-cpx42-selfhost-capacity\/tmp\/barrier-dompdf-simple-invoice-concurrency-16-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260814-cpx42-selfhost-capacity\/tmp\/artifact-dompdf-simple-invoice-portable-concurrency-16-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260814-cpx42-selfhost-capacity\/raw\/attempts\/dompdf__default__simple-invoice__portable__concurrency-16\/a1-w14.jsonl"
+}

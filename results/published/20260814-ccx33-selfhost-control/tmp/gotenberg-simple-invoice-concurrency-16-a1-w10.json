@@ -1,0 +1,24 @@
+{
+    "run_id": "20260814-ccx33-selfhost-control",
+    "renderer": "gotenberg",
+    "variant": "default",
+    "template": "simple-invoice",
+    "scenario": "concurrency-16",
+    "phase": "measured",
+    "asset_mode": "portable",
+    "attempt": 1,
+    "worker": 10,
+    "iterations": [
+        10,
+        26,
+        42,
+        58,
+        74,
+        90
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260814-ccx33-selfhost-control\/tmp\/barrier-gotenberg-simple-invoice-concurrency-16-a1\/worker-10.ready",
+    "start_path": "\/workspace\/results\/runs\/20260814-ccx33-selfhost-control\/tmp\/barrier-gotenberg-simple-invoice-concurrency-16-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260814-ccx33-selfhost-control\/tmp\/artifact-gotenberg-simple-invoice-portable-concurrency-16-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260814-ccx33-selfhost-control\/raw\/attempts\/gotenberg__default__simple-invoice__portable__concurrency-16\/a1-w10.jsonl"
+}

@@ -1,0 +1,26 @@
+{
+    "run_id": "20260814-cpx42-selfhost-capacity",
+    "renderer": "browsershot-persistent",
+    "variant": "persistent",
+    "template": "simple-invoice",
+    "scenario": "concurrency-12",
+    "phase": "measured",
+    "asset_mode": "portable",
+    "attempt": 1,
+    "worker": 6,
+    "iterations": [
+        6,
+        18,
+        30,
+        42,
+        54,
+        66,
+        78,
+        90
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260814-cpx42-selfhost-capacity\/tmp\/barrier-browsershot-persistent-simple-invoice-concurrency-12-a1\/worker-6.ready",
+    "start_path": "\/workspace\/results\/runs\/20260814-cpx42-selfhost-capacity\/tmp\/barrier-browsershot-persistent-simple-invoice-concurrency-12-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260814-cpx42-selfhost-capacity\/tmp\/artifact-browsershot-persistent-simple-invoice-portable-concurrency-12-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260814-cpx42-selfhost-capacity\/raw\/attempts\/browsershot-persistent__persistent__simple-invoice__portable__concurrency-12\/a1-w6.jsonl"
+}

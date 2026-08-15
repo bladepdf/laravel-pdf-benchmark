@@ -1,0 +1,143 @@
+  NEW INVOICE
+
+
+ NS-2026-0819
+ Acme Observatory
+
+
+
+
+Issued
+August 9, 2026
+
+Due
+September 8, 2026
+
+Total
+$4,592.16
+
+
+
+
+Services
+ Page 1 / 2
+
+
+
+
+Orbital analysis 01
+Quantity 1
+$36.50
+
+Spectral dataset 02
+Quantity 2
+$87.50
+
+Instrument calibration 03
+Quantity 3
+$153.00
+    Archive export 04
+    Quantity 4
+    $233.00
+
+    Orbital analysis 05
+    Quantity 1
+    $65.50
+
+    Spectral dataset 06
+    Quantity 2
+    $145.50
+
+    Instrument calibration 07
+    Quantity 3
+    $240.00
+
+    Archive export 08
+    Quantity 4
+    $349.00
+
+    Orbital analysis 09
+    Quantity 1
+    $94.50
+
+
+
+
+    A modern production-style Blade view using browser CSS features.
+
+
+
+
+Northstar ResearchSeed 20260809
+  CONTINUED
+
+
+ NS-2026-0819
+ Acme Observatory
+
+
+
+
+Issued
+August 9, 2026
+
+Due
+September 8, 2026
+
+Total
+$4,592.16
+
+
+
+
+Services
+ Page 2 / 2
+
+
+
+
+Spectral dataset 10
+Quantity 2
+$203.50
+
+Instrument calibration 11
+Quantity 3
+$327.00
+
+Archive export 12
+Quantity 4
+$465.00
+    Orbital analysis 13
+    Quantity 1
+    $123.50
+
+    Spectral dataset 14
+    Quantity 2
+    $261.50
+
+    Instrument calibration 15
+    Quantity 3
+    $414.00
+
+    Archive export 16
+    Quantity 4
+    $581.00
+
+    Orbital analysis 17
+    Quantity 1
+    $152.50
+
+    Spectral dataset 18
+    Quantity 2
+    $319.50
+
+
+
+
+    A modern production-style Blade view using browser CSS features.
+
+
+
+
+Northstar ResearchSeed 20260809
+

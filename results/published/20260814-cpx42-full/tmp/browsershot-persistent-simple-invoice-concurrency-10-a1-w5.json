@@ -1,0 +1,28 @@
+{
+    "run_id": "20260814-cpx42-full",
+    "renderer": "browsershot-persistent",
+    "variant": "persistent",
+    "template": "simple-invoice",
+    "scenario": "concurrency-10",
+    "phase": "measured",
+    "asset_mode": "portable",
+    "attempt": 1,
+    "worker": 5,
+    "iterations": [
+        5,
+        15,
+        25,
+        35,
+        45,
+        55,
+        65,
+        75,
+        85,
+        95
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/tmp\/barrier-browsershot-persistent-simple-invoice-concurrency-10-a1\/worker-5.ready",
+    "start_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/tmp\/barrier-browsershot-persistent-simple-invoice-concurrency-10-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/tmp\/artifact-browsershot-persistent-simple-invoice-portable-concurrency-10-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/raw\/attempts\/browsershot-persistent__persistent__simple-invoice__portable__concurrency-10\/a1-w5.jsonl"
+}

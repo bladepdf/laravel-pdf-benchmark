@@ -1,0 +1,27 @@
+{
+    "run_id": "20260814-ccx33-selfhost-control",
+    "renderer": "dompdf",
+    "variant": "default",
+    "template": "simple-invoice",
+    "scenario": "concurrency-12",
+    "phase": "measured",
+    "asset_mode": "portable",
+    "attempt": 1,
+    "worker": 4,
+    "iterations": [
+        4,
+        16,
+        28,
+        40,
+        52,
+        64,
+        76,
+        88,
+        100
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260814-ccx33-selfhost-control\/tmp\/barrier-dompdf-simple-invoice-concurrency-12-a1\/worker-4.ready",
+    "start_path": "\/workspace\/results\/runs\/20260814-ccx33-selfhost-control\/tmp\/barrier-dompdf-simple-invoice-concurrency-12-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260814-ccx33-selfhost-control\/tmp\/artifact-dompdf-simple-invoice-portable-concurrency-12-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260814-ccx33-selfhost-control\/raw\/attempts\/dompdf__default__simple-invoice__portable__concurrency-12\/a1-w4.jsonl"
+}

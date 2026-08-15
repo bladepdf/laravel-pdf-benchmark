@@ -1,0 +1,30 @@
+{
+    "run_id": "20260814-cpx42-bladepdf-scale-capacity",
+    "renderer": "bladepdf",
+    "variant": "default",
+    "template": "simple-invoice",
+    "scenario": "concurrency-8",
+    "phase": "measured",
+    "asset_mode": "portable",
+    "attempt": 1,
+    "worker": 8,
+    "iterations": [
+        8,
+        16,
+        24,
+        32,
+        40,
+        48,
+        56,
+        64,
+        72,
+        80,
+        88,
+        96
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260814-cpx42-bladepdf-scale-capacity\/tmp\/barrier-bladepdf-simple-invoice-concurrency-8-a1\/worker-8.ready",
+    "start_path": "\/workspace\/results\/runs\/20260814-cpx42-bladepdf-scale-capacity\/tmp\/barrier-bladepdf-simple-invoice-concurrency-8-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260814-cpx42-bladepdf-scale-capacity\/tmp\/artifact-bladepdf-simple-invoice-portable-concurrency-8-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260814-cpx42-bladepdf-scale-capacity\/raw\/attempts\/bladepdf__default__simple-invoice__portable__concurrency-8\/a1-w8.jsonl"
+}

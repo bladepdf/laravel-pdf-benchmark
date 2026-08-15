@@ -1,0 +1,28 @@
+{
+    "run_id": "20260814-cpx42-full",
+    "renderer": "browsershot-persistent",
+    "variant": "persistent",
+    "template": "modern-invoice",
+    "scenario": "concurrency-10",
+    "phase": "measured",
+    "asset_mode": "portable",
+    "attempt": 1,
+    "worker": 4,
+    "iterations": [
+        4,
+        14,
+        24,
+        34,
+        44,
+        54,
+        64,
+        74,
+        84,
+        94
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/tmp\/barrier-browsershot-persistent-modern-invoice-concurrency-10-a1\/worker-4.ready",
+    "start_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/tmp\/barrier-browsershot-persistent-modern-invoice-concurrency-10-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/tmp\/artifact-browsershot-persistent-modern-invoice-portable-concurrency-10-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/raw\/attempts\/browsershot-persistent__persistent__modern-invoice__portable__concurrency-10\/a1-w4.jsonl"
+}

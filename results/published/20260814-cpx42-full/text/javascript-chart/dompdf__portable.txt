@@ -1,0 +1,9 @@
+JavaScript readiness
+This deterministic chart appears only after JavaScript executes and the asynchronous
+readiness contract resolves.
+
+
+
+
+  Waiting for deterministic client-side content…
+

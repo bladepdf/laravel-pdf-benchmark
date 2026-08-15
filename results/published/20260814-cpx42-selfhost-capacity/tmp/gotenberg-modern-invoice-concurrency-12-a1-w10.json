@@ -1,0 +1,26 @@
+{
+    "run_id": "20260814-cpx42-selfhost-capacity",
+    "renderer": "gotenberg",
+    "variant": "default",
+    "template": "modern-invoice",
+    "scenario": "concurrency-12",
+    "phase": "measured",
+    "asset_mode": "portable",
+    "attempt": 1,
+    "worker": 10,
+    "iterations": [
+        10,
+        22,
+        34,
+        46,
+        58,
+        70,
+        82,
+        94
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260814-cpx42-selfhost-capacity\/tmp\/barrier-gotenberg-modern-invoice-concurrency-12-a1\/worker-10.ready",
+    "start_path": "\/workspace\/results\/runs\/20260814-cpx42-selfhost-capacity\/tmp\/barrier-gotenberg-modern-invoice-concurrency-12-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260814-cpx42-selfhost-capacity\/tmp\/artifact-gotenberg-modern-invoice-portable-concurrency-12-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260814-cpx42-selfhost-capacity\/raw\/attempts\/gotenberg__default__modern-invoice__portable__concurrency-12\/a1-w10.jsonl"
+}

@@ -1,0 +1,76 @@
+                                                                                        INVOICE
+NS-2026-0819 · issued August 9, 2026 · page 1 of 2
+
+
+
+  From                                                          Bill to
+  Northstar Research                                            Acme Observatory
+  billing@northstar.invalid                                     27 Meridian Way, Example City
+
+
+
+ Description                                                     Qty       Unit             Amount
+
+
+ Orbital analysis 01                                                   1           $36.50             $36.50
+
+ Spectral dataset 02                                                   2           $43.75             $87.50
+
+ Instrument calibration 03                                             3           $51.00            $153.00
+
+ Archive export 04                                                     4           $58.25            $233.00
+
+ Orbital analysis 05                                                   1           $65.50             $65.50
+
+ Spectral dataset 06                                                   2           $72.75            $145.50
+
+ Instrument calibration 07                                             3           $80.00            $240.00
+
+ Archive export 08                                                     4           $87.25            $349.00
+
+ Orbital analysis 09                                                   1           $94.50             $94.50
+
+
+
+
+Northstar Research · deterministic benchmark fixture · seed 20260809
+                                                                                             INVOICE
+NS-2026-0819 · issued August 9, 2026 · page 2 of 2
+
+Invoice continuation
+Remaining deterministic line items.
+
+ Description                                                    Qty        Unit                  Amount
+
+
+ Spectral dataset 10                                                   2               $101.75             $203.50
+
+ Instrument calibration 11                                             3               $109.00             $327.00
+
+ Archive export 12                                                     4               $116.25             $465.00
+
+ Orbital analysis 13                                                   1               $123.50             $123.50
+
+ Spectral dataset 14                                                   2               $130.75             $261.50
+
+ Instrument calibration 15                                             3               $138.00             $414.00
+
+ Archive export 16                                                     4               $145.25             $581.00
+
+ Orbital analysis 17                                                   1               $152.50             $152.50
+
+ Spectral dataset 18                                                   2               $159.75             $319.50
+
+
+
+                                                                                  Subtotal                $4,252.00
+
+                                                                                  Tax (8%)                 $340.16
+
+                                                                                  Total            $4,592.16
+
+
+
+
+Northstar Research · deterministic benchmark fixture · seed 20260809
+

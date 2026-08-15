@@ -1,0 +1,1067 @@
+{
+    "schema_version": 1,
+    "run_id": "20260814-cpx42-cloudflare-paid-capacity",
+    "generated_at": "2026-08-15T00:18:50+00:00",
+    "manifest": {
+        "schema_version": 1,
+        "run_id": "20260814-cpx42-cloudflare-paid-capacity",
+        "profile": "capacity",
+        "seed": 20260809,
+        "created_at": "2026-08-15T00:13:53+00:00",
+        "renderers": [
+            "cloudflare"
+        ],
+        "templates": [
+            "simple-invoice",
+            "modern-invoice"
+        ],
+        "matrix_options": {
+            "concurrency_levels": [
+                1,
+                2,
+                4,
+                8
+            ],
+            "iterations": 100
+        },
+        "retry_policy": {
+            "application_attempts": 1,
+            "renderer_retries": 0
+        },
+        "environment": {
+            "collected_at": "2026-08-15T00:13:51+00:00",
+            "declared": {
+                "host_label": "hetzner-cpx42-budget",
+                "region": "Nuremberg, Germany",
+                "host_provider": "hetzner",
+                "host_instance_type": "CPX42",
+                "host_cpu_allocation": "shared",
+                "host_purpose": "budget",
+                "host_vcpu": "8",
+                "host_memory_mib": "15608",
+                "cloudflare_plan": "workers-paid-quick-actions",
+                "bladepdf_plan": "scale",
+                "bladepdf_concurrency": "8"
+            },
+            "load_generation": {
+                "mode": "in-process-worker-pool",
+                "host_relation": "co-located-with-application",
+                "separate_host_in_timed_path": false,
+                "note": "Laravel workers generate load on the benchmark host. An external host may orchestrate the command, but is not the timed request generator."
+            },
+            "renderer_configuration": {
+                "cloudflare": {
+                    "quick_actions_cache_ttl_seconds": 0,
+                    "provider_response_cache": "disabled"
+                }
+            },
+            "platform": {
+                "os_release": {
+                    "pretty_name": "Debian GNU/Linux 12 (bookworm)",
+                    "name": "Debian GNU/Linux",
+                    "version_id": "12",
+                    "version": "12 (bookworm)",
+                    "version_codename": "bookworm",
+                    "id": "debian",
+                    "home_url": "https://www.debian.org/",
+                    "support_url": "https://www.debian.org/support",
+                    "bug_report_url": "https://bugs.debian.org/"
+                },
+                "kernel": "6.8.0-137-generic",
+                "architecture": "x86_64",
+                "cpu_model": "AMD EPYC-Genoa Processor",
+                "cpu_logical": 8,
+                "memory_bytes": 16366505984
+            },
+            "runtime": {
+                "php": "8.4.1",
+                "node": "v22.16.0",
+                "npm": "10.9.2",
+                "composer": "Composer version 2.10.2 2026-07-01 11:24:45",
+                "chrome": "Chrome/151.0.7922.71"
+            },
+            "composer_packages": {
+                "laravel/framework": "v13.24.0",
+                "spatie/laravel-pdf": "2.12.0",
+                "spatie/browsershot": "5.4.0",
+                "dompdf/dompdf": "v3.1.6",
+                "bladepdf/spatie-laravel-pdf-driver": "v1.0.3",
+                "bladepdf/laravel": "v1.0.3"
+            },
+            "npm_packages": {
+                "puppeteer": "25.5.0",
+                "tailwindcss": "4.3.3",
+                "vite": "8.2.1",
+                "pixelmatch": "7.2.0",
+                "pngjs": "7.0.0"
+            },
+            "docker": {
+                "observable": true,
+                "version": "29.7.2",
+                "api_version": "1.55",
+                "images": {
+                    "app": {
+                        "id": "sha256:10cf60e96e2d",
+                        "repo_digests": [
+                            "laravel-pdf-benchmark@sha256:10cf60e96e2d8fc2e85a0e5162ab7c6bf1d86c30fa05615fbc196d00c9780244"
+                        ],
+                        "size_bytes": 805175143
+                    },
+                    "gotenberg": {
+                        "id": null,
+                        "repo_digests": [],
+                        "size_bytes": null
+                    }
+                },
+                "services": {
+                    "gotenberg": {
+                        "image": "gotenberg/gotenberg:8.34.0-chromium@sha256:e6b66c4553c7747f86fb41d012665c5ac114b46188f53d09080d217bcb16cee2",
+                        "command": [
+                            "gotenberg",
+                            "--chromium-auto-start=true",
+                            "--chromium-max-concurrency=6",
+                            "--chromium-max-queue-size=0"
+                        ],
+                        "platform": "linux",
+                        "cpu_limit": 0,
+                        "memory_limit_bytes": 0,
+                        "status": "running",
+                        "health": "healthy"
+                    },
+                    "chromium-persistent": {
+                        "image": "laravel-pdf-benchmark:local",
+                        "command": [
+                            "node",
+                            "scripts/start-persistent-browser.mjs"
+                        ],
+                        "platform": "linux",
+                        "cpu_limit": 0,
+                        "memory_limit_bytes": 0,
+                        "status": "running",
+                        "health": "healthy"
+                    }
+                }
+            },
+            "git": {
+                "sha": "228cf7daed95a8fad19845ab89c8d5862bfd7ea5",
+                "branch": "",
+                "dirty": false
+            }
+        }
+    },
+    "methodology": {
+        "percentile": "nearest-rank",
+        "cache": "disabled",
+        "cloudflare_quick_actions_cache_ttl_seconds": 0,
+        "retries": 0,
+        "visual_reference": "browsershot from the same run; not an automatic correctness oracle",
+        "load_generation": "fixed in-process worker pool with no application queue",
+        "queue_observability": "Gotenberg queue depth is sampled from its OTEL gauge; managed-provider internal queues are not observable.",
+        "latency_variability": "sample standard deviation and coefficient of variation over successful observations"
+    },
+    "results": [
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "first",
+            "phase": "first",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 0.488699,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 483.547,
+            "p95_ms": 483.547,
+            "p99_ms": 483.547,
+            "mean_ms": 483.547,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 206819,
+            "attempted_throughput": 2.0462493272955338,
+            "successful_throughput": 2.0462493272955338,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9894577234657734,
+            "worker_utilization_pct": 98.94577234657734,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__modern-invoice__portable__first",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 63905792,
+                    "process_count": 1,
+                    "php_rss_bytes": 63905792,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.05000000000000002,
+                    "cpu_utilization_pct": 1.2789058295597089
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 580630
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.16307
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 1.2789058295597089
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-1",
+            "phase": "measured",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 52.50398,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 501.631,
+            "p95_ms": 736.473,
+            "p99_ms": 980.202,
+            "mean_ms": 523.6722900000001,
+            "stddev_ms": 110.53159002109676,
+            "cv_pct": 21.1070152329612,
+            "mean_pdf_bytes": 206819,
+            "attempted_throughput": 1.904617516614931,
+            "successful_throughput": 1.904617516614931,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9973954164998543,
+            "worker_utilization_pct": 99.73954164998543,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__modern-invoice__portable__concurrency-1",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 112742400,
+                    "process_count": 1,
+                    "php_rss_bytes": 112742400,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 5.57,
+                    "cpu_utilization_pct": 1.3260899459431457
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 369559
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.143286
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 1.3260899459431457
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-2",
+            "phase": "measured",
+            "concurrency": 2,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 25.890993,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 476.725,
+            "p95_ms": 669.187,
+            "p99_ms": 944.272,
+            "mean_ms": 504.0985800000002,
+            "stddev_ms": 117.88127907829536,
+            "cv_pct": 23.384568763969803,
+            "mean_pdf_bytes": 206819,
+            "attempted_throughput": 3.8623470331941303,
+            "successful_throughput": 3.8623470331941303,
+            "configured_concurrency": 2,
+            "peak_in_flight": 2,
+            "average_in_flight": 1.9470036549003746,
+            "worker_utilization_pct": 97.35018274501873,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__modern-invoice__portable__concurrency-2",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 177815552,
+                    "process_count": 2,
+                    "php_rss_bytes": 177815552,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 5.17,
+                    "cpu_utilization_pct": 2.4960417702017064
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 943068
+                },
+                "worker_barrier": {
+                    "expected_workers": 2,
+                    "ready_workers": 2,
+                    "wait_seconds": 0.163627
+                },
+                "load": {
+                    "offered_concurrency": 2,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 2.4960417702017064
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-4",
+            "phase": "measured",
+            "concurrency": 4,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 14.806303,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 480.43,
+            "p95_ms": 811.114,
+            "p99_ms": 951.754,
+            "mean_ms": 523.1049199999999,
+            "stddev_ms": 142.94854131460497,
+            "cv_pct": 27.326934970255106,
+            "mean_pdf_bytes": 206819,
+            "attempted_throughput": 6.7538804251135485,
+            "successful_throughput": 6.7538804251135485,
+            "configured_concurrency": 4,
+            "peak_in_flight": 4,
+            "average_in_flight": 3.5329880794685873,
+            "worker_utilization_pct": 88.32470198671469,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__modern-invoice__portable__concurrency-4",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 302108672,
+                    "process_count": 4,
+                    "php_rss_bytes": 302108672,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 4.41,
+                    "cpu_utilization_pct": 3.723076584343844
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 3020161
+                },
+                "worker_barrier": {
+                    "expected_workers": 4,
+                    "ready_workers": 4,
+                    "wait_seconds": 0.163787
+                },
+                "load": {
+                    "offered_concurrency": 4,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 3.723076584343844
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-8",
+            "phase": "measured",
+            "concurrency": 8,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 5.435545,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 52,
+            "failures": 48,
+            "timeouts": 0,
+            "p50_ms": 486.687,
+            "p95_ms": 656.795,
+            "p99_ms": 818.474,
+            "mean_ms": 494.78525,
+            "stddev_ms": 90.44677939959942,
+            "cv_pct": 18.280007215170503,
+            "mean_pdf_bytes": 206819,
+            "attempted_throughput": 18.397419210033217,
+            "successful_throughput": 9.566657989217273,
+            "configured_concurrency": 8,
+            "peak_in_flight": 8,
+            "average_in_flight": 6.122523868351749,
+            "worker_utilization_pct": 76.53154835439686,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__modern-invoice__portable__concurrency-8",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 547946496,
+                    "process_count": 8,
+                    "php_rss_bytes": 547946496,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 4.42,
+                    "cpu_utilization_pct": 10.16457411354335
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 1798901
+                },
+                "worker_barrier": {
+                    "expected_workers": 8,
+                    "ready_workers": 8,
+                    "wait_seconds": 0.173114
+                },
+                "load": {
+                    "offered_concurrency": 8,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 10.16457411354335
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "warmup",
+            "phase": "warmup",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 2.53695,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 5,
+            "successful": 5,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 518.808,
+            "p95_ms": 658.584,
+            "p99_ms": 658.584,
+            "mean_ms": 505.77139999999997,
+            "stddev_ms": 102.10674842683022,
+            "cv_pct": 20.188319945894573,
+            "mean_pdf_bytes": 206819,
+            "attempted_throughput": 1.9708705335146535,
+            "successful_throughput": 1.9708705335146535,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9968099489544532,
+            "worker_utilization_pct": 99.68099489544532,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__modern-invoice__portable__warmup",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 67026944,
+                    "process_count": 1,
+                    "php_rss_bytes": 67026944,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.29000000000000004,
+                    "cpu_utilization_pct": 1.428881136798124
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 2339343
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.173721
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 5,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 1.428881136798124
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "first",
+            "phase": "first",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 0.2954,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 294.275,
+            "p95_ms": 294.275,
+            "p99_ms": 294.275,
+            "mean_ms": 294.275,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 79160,
+            "attempted_throughput": 3.3852403520649967,
+            "successful_throughput": 3.3852403520649967,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9961916046039268,
+            "worker_utilization_pct": 99.61916046039268,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__simple-invoice__portable__first",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 63467520,
+                    "process_count": 1,
+                    "php_rss_bytes": 63467520,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.06,
+                    "cpu_utilization_pct": 2.5389302640487474
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 2655704
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.163763
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 2.5389302640487474
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-1",
+            "phase": "measured",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 38.690183,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 377.256,
+            "p95_ms": 503.512,
+            "p99_ms": 587.798,
+            "mean_ms": 385.9177799999998,
+            "stddev_ms": 70.82782380206926,
+            "cv_pct": 18.35308645330342,
+            "mean_pdf_bytes": 79160,
+            "attempted_throughput": 2.584634970581556,
+            "successful_throughput": 2.584634970581556,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9974565899571989,
+            "worker_utilization_pct": 99.7456589957199,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__simple-invoice__portable__concurrency-1",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 78299136,
+                    "process_count": 1,
+                    "php_rss_bytes": 78299136,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 5.17,
+                    "cpu_utilization_pct": 1.6703203497383305
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 2572302
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.163352
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 1.6703203497383305
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-2",
+            "phase": "measured",
+            "concurrency": 2,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 21.285455,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 374.62,
+            "p95_ms": 641.88,
+            "p99_ms": 716.965,
+            "mean_ms": 405.8956399999999,
+            "stddev_ms": 102.40446964297502,
+            "cv_pct": 25.229260812699305,
+            "mean_pdf_bytes": 79160,
+            "attempted_throughput": 4.698043805030243,
+            "successful_throughput": 4.698043805030243,
+            "configured_concurrency": 2,
+            "peak_in_flight": 2,
+            "average_in_flight": 1.906915496990785,
+            "worker_utilization_pct": 95.34577484953925,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__simple-invoice__portable__concurrency-2",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 142323712,
+                    "process_count": 2,
+                    "php_rss_bytes": 142323712,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 4.73,
+                    "cpu_utilization_pct": 2.7777183997241313
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 2122263
+                },
+                "worker_barrier": {
+                    "expected_workers": 2,
+                    "ready_workers": 2,
+                    "wait_seconds": 0.174012
+                },
+                "load": {
+                    "offered_concurrency": 2,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 2.7777183997241313
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-4",
+            "phase": "measured",
+            "concurrency": 4,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 10.67573,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 358.903,
+            "p95_ms": 627.547,
+            "p99_ms": 778.486,
+            "mean_ms": 394.54639000000026,
+            "stddev_ms": 108.17092720972683,
+            "cv_pct": 27.416529450371286,
+            "mean_pdf_bytes": 79160,
+            "attempted_throughput": 9.367040942399255,
+            "successful_throughput": 9.367040942399255,
+            "configured_concurrency": 4,
+            "peak_in_flight": 4,
+            "average_in_flight": 3.695732188805826,
+            "worker_utilization_pct": 92.39330472014565,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__simple-invoice__portable__concurrency-4",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 270442496,
+                    "process_count": 4,
+                    "php_rss_bytes": 270442496,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 4.67,
+                    "cpu_utilization_pct": 5.468010150125565
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 1425592
+                },
+                "worker_barrier": {
+                    "expected_workers": 4,
+                    "ready_workers": 4,
+                    "wait_seconds": 0.163361
+                },
+                "load": {
+                    "offered_concurrency": 4,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 5.468010150125565
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-8",
+            "phase": "measured",
+            "concurrency": 8,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 3.56174,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 100,
+            "successful": 41,
+            "failures": 59,
+            "timeouts": 0,
+            "p50_ms": 369.432,
+            "p95_ms": 507.543,
+            "p99_ms": 878.713,
+            "mean_ms": 382.75675609756104,
+            "stddev_ms": 97.39419789489014,
+            "cv_pct": 25.445454937982937,
+            "mean_pdf_bytes": 79160,
+            "attempted_throughput": 28.076165020467524,
+            "successful_throughput": 11.511227658391686,
+            "configured_concurrency": 8,
+            "peak_in_flight": 8,
+            "average_in_flight": 6.176059454087046,
+            "worker_utilization_pct": 77.20074317608807,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__simple-invoice__portable__concurrency-8",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 517361664,
+                    "process_count": 8,
+                    "php_rss_bytes": 517361664,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 3.1799999999999997,
+                    "cpu_utilization_pct": 11.160275595635841
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 1189528
+                },
+                "worker_barrier": {
+                    "expected_workers": 8,
+                    "ready_workers": 8,
+                    "wait_seconds": 0.193944
+                },
+                "load": {
+                    "offered_concurrency": 8,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 11.160275595635841
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "warmup",
+            "phase": "warmup",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 1.893645,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 5,
+            "successful": 5,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 357.591,
+            "p95_ms": 495.24,
+            "p99_ms": 495.24,
+            "mean_ms": 377.0880000000001,
+            "stddev_ms": 72.0514884023918,
+            "cv_pct": 19.10734056835322,
+            "mean_pdf_bytes": 79160,
+            "attempted_throughput": 2.6404104253965235,
+            "successful_throughput": 2.6404104253965235,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9956670864919244,
+            "worker_utilization_pct": 99.56670864919244,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__simple-invoice__portable__warmup",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 64749568,
+                    "process_count": 1,
+                    "php_rss_bytes": 64749568,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.26,
+                    "cpu_utilization_pct": 1.7162667765077404
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 1888289
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.163455
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 5,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 1.7162667765077404
+            }
+        }
+    ],
+    "fidelity_review": null,
+    "costs": null,
+    "cost_note": "No local, uncommitted pricing snapshot was provided."
+}

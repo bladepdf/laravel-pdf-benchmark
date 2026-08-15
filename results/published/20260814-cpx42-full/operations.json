@@ -1,0 +1,141 @@
+{
+    "schema_version": 1,
+    "verified_at": "2026-08-13",
+    "renderers": {
+        "dompdf": {
+            "install_commands": [
+                "composer require dompdf/dompdf spatie/laravel-pdf"
+            ],
+            "external_binaries": [],
+            "requires_docker": false,
+            "requires_node": false,
+            "requires_chrome": false,
+            "asset_strategy": "DOMPDF chroot, file paths, or inline data URIs",
+            "ownership": {
+                "queue": "application",
+                "concurrency": "application",
+                "storage": "application",
+                "retry": "application",
+                "monitoring": "application",
+                "browser_updates": "not applicable"
+            },
+            "operational_responsibility": "Low",
+            "source": "https://github.com/dompdf/dompdf",
+            "notes": "Pure PHP renderer with predominantly CSS 2.1 support."
+        },
+        "browsershot": {
+            "install_commands": [
+                "composer require spatie/browsershot spatie/laravel-pdf",
+                "npm install puppeteer"
+            ],
+            "external_binaries": [
+                "node",
+                "chrome/chromium"
+            ],
+            "requires_docker": false,
+            "requires_node": true,
+            "requires_chrome": true,
+            "asset_strategy": "Inline/data URI, reachable URLs, or configured local file access",
+            "ownership": {
+                "queue": "application",
+                "concurrency": "application",
+                "storage": "application",
+                "retry": "application",
+                "monitoring": "application",
+                "browser_updates": "application"
+            },
+            "operational_responsibility": "High",
+            "source": "https://spatie.be/docs/browsershot/v5/requirements"
+        },
+        "gotenberg": {
+            "install_commands": [
+                "composer require spatie/laravel-pdf",
+                "docker pull gotenberg/gotenberg:8.34.0-chromium"
+            ],
+            "external_binaries": [
+                "docker"
+            ],
+            "requires_docker": true,
+            "requires_node": false,
+            "requires_chrome": false,
+            "asset_strategy": "Current Spatie driver sends HTML only; native API also supports multipart assets",
+            "ownership": {
+                "queue": "render service",
+                "concurrency": "render service/operator",
+                "storage": "application",
+                "retry": "application",
+                "monitoring": "operator",
+                "browser_updates": "operator"
+            },
+            "operational_responsibility": "High",
+            "source": "https://gotenberg.dev/docs/convert-with-chromium/convert-html-to-pdf",
+            "telemetry_source": "https://gotenberg.dev/docs/telemetry",
+            "notes": "The pinned 8.34 service exports active Chromium requests and queue size through an internal OTEL Prometheus endpoint sampled by the harness."
+        },
+        "cloudflare": {
+            "install_commands": [
+                "composer require spatie/laravel-pdf"
+            ],
+            "external_binaries": [],
+            "requires_docker": false,
+            "requires_node": false,
+            "requires_chrome": false,
+            "asset_strategy": "Current Spatie driver submits JSON HTML; assets must be embedded or reachable",
+            "ownership": {
+                "queue": "application/provider",
+                "concurrency": "provider limits",
+                "storage": "application",
+                "retry": "application",
+                "monitoring": "application/provider",
+                "browser_updates": "provider"
+            },
+            "operational_responsibility": "Medium",
+            "source": "https://developers.cloudflare.com/browser-run/",
+            "notes": "The benchmark disables the Quick Actions response cache with cacheTTL=0 so repeated deterministic fixtures measure fresh rendering."
+        },
+        "bladepdf": {
+            "install_commands": [
+                "composer require bladepdf/laravel bladepdf/spatie-laravel-pdf-driver spatie/laravel-pdf"
+            ],
+            "external_binaries": [],
+            "requires_docker": false,
+            "requires_node": false,
+            "requires_chrome": false,
+            "asset_strategy": "Laravel package discovers, rewrites, and uploads local assets automatically",
+            "ownership": {
+                "queue": "provider",
+                "concurrency": "provider plan",
+                "storage": "provider/application",
+                "retry": "application/provider",
+                "monitoring": "provider/application",
+                "browser_updates": "provider"
+            },
+            "operational_responsibility": "Low",
+            "source": "https://github.com/bladepdf/laravel"
+        },
+        "browsershot-persistent": {
+            "install_commands": [
+                "Same dependencies as Browsershot",
+                "Operate a persistent Puppeteer browser endpoint"
+            ],
+            "external_binaries": [
+                "node",
+                "chrome/chromium"
+            ],
+            "requires_docker": true,
+            "requires_node": true,
+            "requires_chrome": true,
+            "asset_strategy": "Same as Browsershot",
+            "ownership": {
+                "queue": "application",
+                "concurrency": "application",
+                "storage": "application",
+                "retry": "application",
+                "monitoring": "operator",
+                "browser_updates": "operator"
+            },
+            "operational_responsibility": "High",
+            "source": "https://spatie.be/docs/browsershot/v5/miscellaneous-options/using-a-persistent-browser"
+        }
+    }
+}

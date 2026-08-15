@@ -1,0 +1,607 @@
+{
+    "schema_version": 1,
+    "run_id": "20260814-cpx22-bladepdf-starter-c1",
+    "generated_at": "2026-08-14T22:01:07+00:00",
+    "manifest": {
+        "schema_version": 1,
+        "run_id": "20260814-cpx22-bladepdf-starter-c1",
+        "profile": "capacity",
+        "seed": 20260809,
+        "created_at": "2026-08-14T21:58:33+00:00",
+        "renderers": [
+            "bladepdf"
+        ],
+        "templates": [
+            "simple-invoice",
+            "modern-invoice"
+        ],
+        "matrix_options": {
+            "concurrency_levels": [
+                1
+            ],
+            "iterations": 100
+        },
+        "retry_policy": {
+            "application_attempts": 1,
+            "renderer_retries": 0
+        },
+        "environment": {
+            "collected_at": "2026-08-14T21:58:32+00:00",
+            "declared": {
+                "host_label": "hetzner-cpx22-budget",
+                "region": "Nuremberg, Germany",
+                "host_provider": "hetzner",
+                "host_instance_type": "CPX22",
+                "host_cpu_allocation": "shared",
+                "host_purpose": "budget",
+                "host_vcpu": "2",
+                "host_memory_mib": "3814",
+                "cloudflare_plan": "not-run",
+                "bladepdf_plan": "starter",
+                "bladepdf_concurrency": "1"
+            },
+            "load_generation": {
+                "mode": "in-process-worker-pool",
+                "host_relation": "co-located-with-application",
+                "separate_host_in_timed_path": false,
+                "note": "Laravel workers generate load on the benchmark host. An external host may orchestrate the command, but is not the timed request generator."
+            },
+            "platform": {
+                "os_release": {
+                    "pretty_name": "Debian GNU/Linux 12 (bookworm)",
+                    "name": "Debian GNU/Linux",
+                    "version_id": "12",
+                    "version": "12 (bookworm)",
+                    "version_codename": "bookworm",
+                    "id": "debian",
+                    "home_url": "https://www.debian.org/",
+                    "support_url": "https://www.debian.org/support",
+                    "bug_report_url": "https://bugs.debian.org/"
+                },
+                "kernel": "6.8.0-137-generic",
+                "architecture": "x86_64",
+                "cpu_model": "AMD EPYC-Genoa Processor",
+                "cpu_logical": 2,
+                "memory_bytes": 3999674368
+            },
+            "runtime": {
+                "php": "8.4.1",
+                "node": "v22.16.0",
+                "npm": "10.9.2",
+                "composer": "Composer version 2.10.2 2026-07-01 11:24:45",
+                "chrome": "Chrome/151.0.7922.71"
+            },
+            "composer_packages": {
+                "laravel/framework": "v13.24.0",
+                "spatie/laravel-pdf": "2.12.0",
+                "spatie/browsershot": "5.4.0",
+                "dompdf/dompdf": "v3.1.6",
+                "bladepdf/spatie-laravel-pdf-driver": "v1.0.3",
+                "bladepdf/laravel": "v1.0.3"
+            },
+            "npm_packages": {
+                "puppeteer": "25.5.0",
+                "tailwindcss": "4.3.3",
+                "vite": "8.2.1",
+                "pixelmatch": "7.2.0",
+                "pngjs": "7.0.0"
+            },
+            "docker": {
+                "observable": true,
+                "version": "29.7.2",
+                "api_version": "1.55",
+                "images": {
+                    "app": {
+                        "id": "sha256:da607479dfd0",
+                        "repo_digests": [
+                            "laravel-pdf-benchmark@sha256:da607479dfd0214271ccfa67fdc7ce91c6e43bc47720fd6a1df205f06de525d6"
+                        ],
+                        "size_bytes": 805135387
+                    },
+                    "gotenberg": {
+                        "id": null,
+                        "repo_digests": [],
+                        "size_bytes": null
+                    }
+                },
+                "services": {
+                    "gotenberg": {
+                        "image": "gotenberg/gotenberg:8.34.0-chromium@sha256:e6b66c4553c7747f86fb41d012665c5ac114b46188f53d09080d217bcb16cee2",
+                        "command": [
+                            "gotenberg",
+                            "--chromium-auto-start=true",
+                            "--chromium-max-concurrency=6",
+                            "--chromium-max-queue-size=0"
+                        ],
+                        "platform": "linux",
+                        "cpu_limit": 0,
+                        "memory_limit_bytes": 0,
+                        "status": "running",
+                        "health": "healthy"
+                    },
+                    "chromium-persistent": {
+                        "image": "laravel-pdf-benchmark:local",
+                        "command": [
+                            "node",
+                            "scripts/start-persistent-browser.mjs"
+                        ],
+                        "platform": "linux",
+                        "cpu_limit": 0,
+                        "memory_limit_bytes": 0,
+                        "status": "running",
+                        "health": "healthy"
+                    }
+                }
+            },
+            "git": {
+                "sha": "b6d5d4d8fe01b9088f6af8a91601960f9185aeef",
+                "branch": "",
+                "dirty": false
+            }
+        }
+    },
+    "methodology": {
+        "percentile": "nearest-rank",
+        "cache": "disabled",
+        "retries": 0,
+        "visual_reference": "browsershot from the same run; not an automatic correctness oracle",
+        "load_generation": "fixed in-process worker pool with no application queue",
+        "queue_observability": "Gotenberg queue depth is sampled from its OTEL gauge; managed-provider internal queues are not observable.",
+        "latency_variability": "sample standard deviation and coefficient of variation over successful observations"
+    },
+    "results": [
+        {
+            "renderer": "bladepdf",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "first",
+            "phase": "first",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 0.639082,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": 1,
+            "over_declared_concurrency": false,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 636.7,
+            "p95_ms": 636.7,
+            "p99_ms": 636.7,
+            "mean_ms": 636.7,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 160537,
+            "attempted_throughput": 1.5647444302922002,
+            "successful_throughput": 1.5647444302922002,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.996272778767044,
+            "worker_utilization_pct": 99.6272778767044,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "bladepdf__default__modern-invoice__portable__first",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 64319488,
+                    "process_count": 1,
+                    "php_rss_bytes": 64319488,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.06999999999999998,
+                    "cpu_utilization_pct": 5.4766055060226995
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 987172
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.183264
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 5.4766055060226995
+            }
+        },
+        {
+            "renderer": "bladepdf",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-1",
+            "phase": "measured",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 48.88169,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": 1,
+            "over_declared_concurrency": false,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 477.248,
+            "p95_ms": 593.803,
+            "p99_ms": 638.694,
+            "mean_ms": 487.6237799999999,
+            "stddev_ms": 57.057516948557705,
+            "cv_pct": 11.701135032536296,
+            "mean_pdf_bytes": 160537,
+            "attempted_throughput": 2.0457557829935915,
+            "successful_throughput": 2.0457557829935915,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9975591678601945,
+            "worker_utilization_pct": 99.75591678601945,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "bladepdf__default__modern-invoice__portable__concurrency-1",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 108617728,
+                    "process_count": 1,
+                    "php_rss_bytes": 108617728,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 5.01,
+                    "cpu_utilization_pct": 5.124618236398946
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 749374
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.208944
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 5.124618236398946
+            }
+        },
+        {
+            "renderer": "bladepdf",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "warmup",
+            "phase": "warmup",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 3.691326,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": 1,
+            "over_declared_concurrency": false,
+            "attempted": 5,
+            "successful": 5,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 786.856,
+            "p95_ms": 838.491,
+            "p99_ms": 838.491,
+            "mean_ms": 736.8302,
+            "stddev_ms": 128.94048672236352,
+            "cv_pct": 17.49934879465629,
+            "mean_pdf_bytes": 160537,
+            "attempted_throughput": 1.35452680148001,
+            "successful_throughput": 1.35452680148001,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9980562540398762,
+            "worker_utilization_pct": 99.80562540398762,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "bladepdf__default__modern-invoice__portable__warmup",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 67387392,
+                    "process_count": 1,
+                    "php_rss_bytes": 67387392,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.24000000000000002,
+                    "cpu_utilization_pct": 3.2508643235520247
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 245455
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.206407
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 5,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 3.2508643235520247
+            }
+        },
+        {
+            "renderer": "bladepdf",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "first",
+            "phase": "first",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 0.465975,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": 1,
+            "over_declared_concurrency": false,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 462.643,
+            "p95_ms": 462.643,
+            "p99_ms": 462.643,
+            "mean_ms": 462.643,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 63798,
+            "attempted_throughput": 2.1460378775685394,
+            "successful_throughput": 2.1460378775685394,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9928494017919416,
+            "worker_utilization_pct": 99.28494017919417,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "bladepdf__default__simple-invoice__portable__first",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 63627264,
+                    "process_count": 1,
+                    "php_rss_bytes": 63627264,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.09,
+                    "cpu_utilization_pct": 9.657170449058427
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 75470
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.142656
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 9.657170449058427
+            }
+        },
+        {
+            "renderer": "bladepdf",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "concurrency-1",
+            "phase": "measured",
+            "concurrency": 1,
+            "measured": true,
+            "attempt": 1,
+            "duration_seconds": 33.991163,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": 1,
+            "over_declared_concurrency": false,
+            "attempted": 100,
+            "successful": 100,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 332.57,
+            "p95_ms": 423.288,
+            "p99_ms": 623.696,
+            "mean_ms": 339.06598999999994,
+            "stddev_ms": 61.06277469394205,
+            "cv_pct": 18.00911223621752,
+            "mean_pdf_bytes": 63798,
+            "attempted_throughput": 2.9419411156952764,
+            "successful_throughput": 2.9419411156952764,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9975121769149232,
+            "worker_utilization_pct": 99.75121769149233,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "bladepdf__default__simple-invoice__portable__concurrency-1",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 76460032,
+                    "process_count": 1,
+                    "php_rss_bytes": 76460032,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 4.4399999999999995,
+                    "cpu_utilization_pct": 6.531109276843513
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 448638
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.173214
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 100,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 6.531109276843513
+            }
+        },
+        {
+            "renderer": "bladepdf",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "warmup",
+            "phase": "warmup",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 1.867876,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": 1,
+            "over_declared_concurrency": false,
+            "attempted": 5,
+            "successful": 5,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 380.517,
+            "p95_ms": 408.57,
+            "p99_ms": 408.57,
+            "mean_ms": 372.75640000000004,
+            "stddev_ms": 34.90224169448145,
+            "cv_pct": 9.363284357956413,
+            "mean_pdf_bytes": 63798,
+            "attempted_throughput": 2.6768372204578887,
+            "successful_throughput": 2.6768372204578887,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9978082056838891,
+            "worker_utilization_pct": 99.7808205683889,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "bladepdf__default__simple-invoice__portable__warmup",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 64655360,
+                    "process_count": 1,
+                    "php_rss_bytes": 64655360,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.23,
+                    "cpu_utilization_pct": 6.156725607053145
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 0,
+                    "run_artifacts_bytes_after_block": 822613
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.163373
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 5,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 6.156725607053145
+            }
+        }
+    ],
+    "fidelity_review": null,
+    "costs": null,
+    "cost_note": "No local, uncommitted pricing snapshot was provided."
+}

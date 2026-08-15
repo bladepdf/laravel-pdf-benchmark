@@ -1,0 +1,19 @@
+{
+    "run_id": "20260814-cpx42-full",
+    "renderer": "cloudflare",
+    "variant": "default",
+    "template": "javascript-chart",
+    "scenario": "representative",
+    "phase": "fidelity",
+    "asset_mode": "portable",
+    "attempt": 1,
+    "worker": 1,
+    "iterations": [
+        1
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/tmp\/barrier-cloudflare-javascript-chart-representative-a1\/worker-1.ready",
+    "start_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/tmp\/barrier-cloudflare-javascript-chart-representative-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/tmp\/artifact-cloudflare-javascript-chart-portable-representative-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260814-cpx42-full\/raw\/attempts\/cloudflare__default__javascript-chart__portable__representative\/a1-w1.jsonl"
+}

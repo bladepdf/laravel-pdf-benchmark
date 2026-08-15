@@ -1,0 +1,138 @@
+{
+    "schema_version": 1,
+    "run_id": "20260814-cpx22-bladepdf-starter-c1",
+    "profile": "capacity",
+    "seed": 20260809,
+    "created_at": "2026-08-14T21:58:33+00:00",
+    "renderers": [
+        "bladepdf"
+    ],
+    "templates": [
+        "simple-invoice",
+        "modern-invoice"
+    ],
+    "matrix_options": {
+        "concurrency_levels": [
+            1
+        ],
+        "iterations": 100
+    },
+    "retry_policy": {
+        "application_attempts": 1,
+        "renderer_retries": 0
+    },
+    "environment": {
+        "collected_at": "2026-08-14T21:58:32+00:00",
+        "declared": {
+            "host_label": "hetzner-cpx22-budget",
+            "region": "Nuremberg, Germany",
+            "host_provider": "hetzner",
+            "host_instance_type": "CPX22",
+            "host_cpu_allocation": "shared",
+            "host_purpose": "budget",
+            "host_vcpu": "2",
+            "host_memory_mib": "3814",
+            "cloudflare_plan": "not-run",
+            "bladepdf_plan": "starter",
+            "bladepdf_concurrency": "1"
+        },
+        "load_generation": {
+            "mode": "in-process-worker-pool",
+            "host_relation": "co-located-with-application",
+            "separate_host_in_timed_path": false,
+            "note": "Laravel workers generate load on the benchmark host. An external host may orchestrate the command, but is not the timed request generator."
+        },
+        "platform": {
+            "os_release": {
+                "pretty_name": "Debian GNU/Linux 12 (bookworm)",
+                "name": "Debian GNU/Linux",
+                "version_id": "12",
+                "version": "12 (bookworm)",
+                "version_codename": "bookworm",
+                "id": "debian",
+                "home_url": "https://www.debian.org/",
+                "support_url": "https://www.debian.org/support",
+                "bug_report_url": "https://bugs.debian.org/"
+            },
+            "kernel": "6.8.0-137-generic",
+            "architecture": "x86_64",
+            "cpu_model": "AMD EPYC-Genoa Processor",
+            "cpu_logical": 2,
+            "memory_bytes": 3999674368
+        },
+        "runtime": {
+            "php": "8.4.1",
+            "node": "v22.16.0",
+            "npm": "10.9.2",
+            "composer": "Composer version 2.10.2 2026-07-01 11:24:45",
+            "chrome": "Chrome/151.0.7922.71"
+        },
+        "composer_packages": {
+            "laravel/framework": "v13.24.0",
+            "spatie/laravel-pdf": "2.12.0",
+            "spatie/browsershot": "5.4.0",
+            "dompdf/dompdf": "v3.1.6",
+            "bladepdf/spatie-laravel-pdf-driver": "v1.0.3",
+            "bladepdf/laravel": "v1.0.3"
+        },
+        "npm_packages": {
+            "puppeteer": "25.5.0",
+            "tailwindcss": "4.3.3",
+            "vite": "8.2.1",
+            "pixelmatch": "7.2.0",
+            "pngjs": "7.0.0"
+        },
+        "docker": {
+            "observable": true,
+            "version": "29.7.2",
+            "api_version": "1.55",
+            "images": {
+                "app": {
+                    "id": "sha256:da607479dfd0",
+                    "repo_digests": [
+                        "laravel-pdf-benchmark@sha256:da607479dfd0214271ccfa67fdc7ce91c6e43bc47720fd6a1df205f06de525d6"
+                    ],
+                    "size_bytes": 805135387
+                },
+                "gotenberg": {
+                    "id": null,
+                    "repo_digests": [],
+                    "size_bytes": null
+                }
+            },
+            "services": {
+                "gotenberg": {
+                    "image": "gotenberg/gotenberg:8.34.0-chromium@sha256:e6b66c4553c7747f86fb41d012665c5ac114b46188f53d09080d217bcb16cee2",
+                    "command": [
+                        "gotenberg",
+                        "--chromium-auto-start=true",
+                        "--chromium-max-concurrency=6",
+                        "--chromium-max-queue-size=0"
+                    ],
+                    "platform": "linux",
+                    "cpu_limit": 0,
+                    "memory_limit_bytes": 0,
+                    "status": "running",
+                    "health": "healthy"
+                },
+                "chromium-persistent": {
+                    "image": "laravel-pdf-benchmark:local",
+                    "command": [
+                        "node",
+                        "scripts/start-persistent-browser.mjs"
+                    ],
+                    "platform": "linux",
+                    "cpu_limit": 0,
+                    "memory_limit_bytes": 0,
+                    "status": "running",
+                    "health": "healthy"
+                }
+            }
+        },
+        "git": {
+            "sha": "b6d5d4d8fe01b9088f6af8a91601960f9185aeef",
+            "branch": "",
+            "dirty": false
+        }
+    }
+}
