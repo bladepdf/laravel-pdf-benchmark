@@ -1,0 +1,10 @@
+ Northstar Research local
+PNG
+
+Laravel local assets
+Mode: native-path. This unchanged view references a public_path() PNG, Vite-built
+CSS, and a storage_path() WOFF2 font.
+
+PNG                                           Font
+/workspace/public/images/benchmark-logo.png   /workspace/storage/app/fonts/inter.woff2
+

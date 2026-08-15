@@ -1,0 +1,19 @@
+{
+    "run_id": "20260815-local-fidelity-v104",
+    "renderer": "browsershot",
+    "variant": "default",
+    "template": "local-assets",
+    "scenario": "representative",
+    "phase": "fidelity",
+    "asset_mode": "native-path",
+    "attempt": 1,
+    "worker": 1,
+    "iterations": [
+        1
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260815-local-fidelity-v104\/tmp\/barrier-browsershot-local-assets-representative-a1\/worker-1.ready",
+    "start_path": "\/workspace\/results\/runs\/20260815-local-fidelity-v104\/tmp\/barrier-browsershot-local-assets-representative-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260815-local-fidelity-v104\/tmp\/artifact-browsershot-local-assets-native-path-representative-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260815-local-fidelity-v104\/raw\/attempts\/browsershot__default__local-assets__native-path__representative\/a1-w1.jsonl"
+}

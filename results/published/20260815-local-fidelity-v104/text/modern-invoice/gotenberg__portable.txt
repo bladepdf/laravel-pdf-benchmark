@@ -1,0 +1,93 @@
+       NEW INVOICE
+
+
+
+     NS-2026-0819
+     Acme Observatory
+
+
+
+   Issued                       Due                    Total
+   August 9, 2026               September 8,           $4,592.16
+                                2026
+
+
+    Services                              Page 1 / 2
+
+    Orbital analysis 01                   $36.50
+    Quantity 1
+
+    Spectral dataset 02                    $87.50
+    Quantity 2
+
+    Instrument calibration 03            $153.00
+    Quantity 3
+
+    Archive export 04                    $233.00
+    Quantity 4
+
+    Orbital analysis 05                    $65.50        A modern production-
+    Quantity 1
+                                                         style Blade view using
+                                                         browser CSS features.
+    Spectral dataset 06                  $145.50
+    Quantity 2
+
+    Instrument calibration 07            $240.00
+    Quantity 3
+
+    Archive export 08                    $349.00
+    Quantity 4
+
+    Orbital analysis 09                   $94.50
+    Quantity 1
+
+
+Northstar Research                                                     Seed 20260809
+       CONTINUED
+
+
+
+     NS-2026-0819
+     Acme Observatory
+
+
+
+   Issued                       Due                   Total
+   August 9, 2026               September 8,          $4,592.16
+                                2026
+
+
+    Services                             Page 2 / 2
+
+    Spectral dataset 10                  $203.50
+    Quantity 2
+
+    Instrument calibration 11            $327.00
+    Quantity 3
+
+    Archive export 12                    $465.00
+    Quantity 4
+
+    Orbital analysis 13                  $123.50
+    Quantity 1
+
+    Spectral dataset 14                  $261.50        A modern production-
+    Quantity 2
+                                                        style Blade view using
+                                                        browser CSS features.
+    Instrument calibration 15            $414.00
+    Quantity 3
+
+    Archive export 16                    $581.00
+    Quantity 4
+
+    Orbital analysis 17                  $152.50
+    Quantity 1
+
+    Spectral dataset 18                  $319.50
+    Quantity 2
+
+
+Northstar Research                                                    Seed 20260809
+

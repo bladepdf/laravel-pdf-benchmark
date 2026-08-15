@@ -1,0 +1,9 @@
+Laravel local assets
+Mode: documented-remediation. This unchanged view references a
+public_path() PNG, Vite-built CSS, and a storage_path() WOFF2 font.
+
+PNG
+/workspace/public/images/benchmark-logo.png
+Font
+/workspace/storage/app/fonts/inter.woff2
+

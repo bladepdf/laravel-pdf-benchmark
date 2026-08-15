@@ -1,0 +1,3551 @@
+{
+    "schema_version": 1,
+    "run_id": "20260815-local-fidelity-v104",
+    "generated_at": "2026-08-15T16:34:22+00:00",
+    "manifest": {
+        "schema_version": 1,
+        "run_id": "20260815-local-fidelity-v104",
+        "profile": "fidelity",
+        "seed": 20260809,
+        "created_at": "2026-08-15T16:04:36+00:00",
+        "renderers": [
+            "dompdf",
+            "browsershot",
+            "gotenberg",
+            "cloudflare",
+            "bladepdf"
+        ],
+        "templates": [
+            "simple-invoice",
+            "modern-invoice",
+            "long-report",
+            "javascript-chart",
+            "local-assets"
+        ],
+        "matrix_options": [],
+        "retry_policy": {
+            "application_attempts": 1,
+            "renderer_retries": 0
+        },
+        "environment": {
+            "collected_at": "2026-08-15T16:04:32+00:00",
+            "declared": {
+                "host_label": "local-docker-fidelity",
+                "region": "Prague, Czechia",
+                "host_provider": "local",
+                "host_instance_type": "docker-desktop",
+                "host_cpu_allocation": "unknown",
+                "host_purpose": "development",
+                "host_vcpu": "4",
+                "host_memory_mib": "7837",
+                "cloudflare_plan": "workers-paid",
+                "bladepdf_plan": "scale",
+                "bladepdf_concurrency": "8"
+            },
+            "load_generation": {
+                "mode": "in-process-worker-pool",
+                "host_relation": "co-located-with-application",
+                "separate_host_in_timed_path": false,
+                "note": "Laravel workers generate load on the benchmark host. An external host may orchestrate the command, but is not the timed request generator."
+            },
+            "renderer_configuration": {
+                "cloudflare": {
+                    "quick_actions_cache_ttl_seconds": 0,
+                    "provider_response_cache": "disabled"
+                }
+            },
+            "platform": {
+                "os_release": {
+                    "pretty_name": "Debian GNU/Linux 12 (bookworm)",
+                    "name": "Debian GNU/Linux",
+                    "version_id": "12",
+                    "version": "12 (bookworm)",
+                    "version_codename": "bookworm",
+                    "id": "debian",
+                    "home_url": "https://www.debian.org/",
+                    "support_url": "https://www.debian.org/support",
+                    "bug_report_url": "https://bugs.debian.org/"
+                },
+                "kernel": "6.12.76-linuxkit",
+                "architecture": "x86_64",
+                "cpu_model": "VirtualApple @ 2.50GHz",
+                "cpu_logical": 4,
+                "memory_bytes": 8217706496
+            },
+            "runtime": {
+                "php": "8.4.1",
+                "node": "v22.16.0",
+                "npm": "10.9.2",
+                "composer": "Composer version 2.10.2 2026-07-01 11:24:45",
+                "chrome": "Chrome/151.0.7922.71"
+            },
+            "composer_packages": {
+                "laravel/framework": "v13.24.0",
+                "spatie/laravel-pdf": "2.12.0",
+                "spatie/browsershot": "5.4.0",
+                "dompdf/dompdf": "v3.1.6",
+                "bladepdf/spatie-laravel-pdf-driver": "v1.0.3",
+                "bladepdf/laravel": "v1.0.4"
+            },
+            "npm_packages": {
+                "puppeteer": "25.5.0",
+                "tailwindcss": "4.3.3",
+                "vite": "8.2.1",
+                "pixelmatch": "7.2.0",
+                "pngjs": "7.0.0"
+            },
+            "docker": {
+                "observable": true,
+                "version": "29.6.2",
+                "api_version": "1.55",
+                "images": {
+                    "app": {
+                        "id": "sha256:e74e33113e85",
+                        "repo_digests": [],
+                        "size_bytes": 2046088307
+                    },
+                    "gotenberg": {
+                        "id": "sha256:098572964627",
+                        "repo_digests": [
+                            "gotenberg/gotenberg@sha256:e6b66c4553c7747f86fb41d012665c5ac114b46188f53d09080d217bcb16cee2"
+                        ],
+                        "size_bytes": 1153379409
+                    }
+                },
+                "services": {
+                    "gotenberg": {
+                        "image": "gotenberg/gotenberg:8.34.0-chromium@sha256:e6b66c4553c7747f86fb41d012665c5ac114b46188f53d09080d217bcb16cee2",
+                        "command": [
+                            "gotenberg",
+                            "--chromium-auto-start=true",
+                            "--chromium-max-concurrency=6",
+                            "--chromium-max-queue-size=0"
+                        ],
+                        "platform": "linux",
+                        "cpu_limit": 0,
+                        "memory_limit_bytes": 0,
+                        "status": "running",
+                        "health": "healthy"
+                    },
+                    "chromium-persistent": {
+                        "image": "laravel-pdf-benchmark:local",
+                        "command": [
+                            "node",
+                            "scripts/start-persistent-browser.mjs"
+                        ],
+                        "platform": "linux",
+                        "cpu_limit": 0,
+                        "memory_limit_bytes": 0,
+                        "status": "running",
+                        "health": "healthy"
+                    }
+                }
+            },
+            "git": {
+                "sha": "36be2fba7080dc2c3db2cc45a3ca362060e96817",
+                "branch": "main",
+                "dirty": false
+            }
+        }
+    },
+    "methodology": {
+        "percentile": "nearest-rank",
+        "cache": "disabled",
+        "cloudflare_quick_actions_cache_ttl_seconds": 0,
+        "retries": 0,
+        "visual_reference": "browsershot from the same run; not an automatic correctness oracle",
+        "load_generation": "fixed in-process worker pool with no application queue",
+        "queue_observability": "Gotenberg queue depth is sampled from its OTEL gauge; managed-provider internal queues are not observable.",
+        "latency_variability": "sample standard deviation and coefficient of variation over successful observations",
+        "cpu_reporting": "CPU counters are retained for diagnostics but omitted from comparative report tables because short-lived application descendants may be undercounted; values are never estimated or simulated."
+    },
+    "results": [
+        {
+            "renderer": "bladepdf",
+            "variant": "default",
+            "template": "javascript-chart",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.960195,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": 8,
+            "over_declared_concurrency": false,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 953.494,
+            "p95_ms": 953.494,
+            "p99_ms": 953.494,
+            "mean_ms": 953.494,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 60283,
+            "attempted_throughput": 1.0414551210951941,
+            "successful_throughput": 1.0414551210951941,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9930212092335412,
+            "worker_utilization_pct": 99.30212092335412,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "bladepdf__default__javascript-chart__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 84488192,
+                    "process_count": 1,
+                    "php_rss_bytes": 84488192,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.16999999999999998,
+                    "cpu_utilization_pct": 4.426184264654575
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 341677
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.343649
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 4.426184264654575
+            }
+        },
+        {
+            "renderer": "bladepdf",
+            "variant": "default",
+            "template": "local-assets",
+            "asset_mode": "documented-remediation",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.591415,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": 8,
+            "over_declared_concurrency": false,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 590.875,
+            "p95_ms": 590.875,
+            "p99_ms": 590.875,
+            "mean_ms": 590.875,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 62769,
+            "attempted_throughput": 1.6908600559674678,
+            "successful_throughput": 1.6908600559674678,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9990869355697776,
+            "worker_utilization_pct": 99.90869355697775,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "bladepdf__default__local-assets__documented-remediation__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 84467712,
+                    "process_count": 1,
+                    "php_rss_bytes": 84467712,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.15000000000000002,
+                    "cpu_utilization_pct": 6.340725209878005
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 1386127
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.295862
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 6.340725209878005
+            }
+        },
+        {
+            "renderer": "bladepdf",
+            "variant": "default",
+            "template": "local-assets",
+            "asset_mode": "native-path",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.758364,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": 8,
+            "over_declared_concurrency": false,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 499.785,
+            "p95_ms": 499.785,
+            "p99_ms": 499.785,
+            "mean_ms": 499.785,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 61022,
+            "attempted_throughput": 1.3186279939448602,
+            "successful_throughput": 1.3186279939448602,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.659030491953732,
+            "worker_utilization_pct": 65.9030491953732,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "bladepdf__default__local-assets__native-path__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 84463616,
+                    "process_count": 2,
+                    "php_rss_bytes": 84463616,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.36,
+                    "cpu_utilization_pct": 11.867651945503741
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 2789283
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.000182
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 11.867651945503741
+            }
+        },
+        {
+            "renderer": "bladepdf",
+            "variant": "default",
+            "template": "long-report",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.816936,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": 8,
+            "over_declared_concurrency": false,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 812.163,
+            "p95_ms": 812.163,
+            "p99_ms": 812.163,
+            "mean_ms": 812.163,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 364059,
+            "attempted_throughput": 1.2240860973197412,
+            "successful_throughput": 1.2240860973197412,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9941574370574928,
+            "worker_utilization_pct": 99.41574370574928,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "bladepdf__default__long-report__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 84525056,
+                    "process_count": 1,
+                    "php_rss_bytes": 84525056,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.16999999999999998,
+                    "cpu_utilization_pct": 5.202365913608899
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 2005952
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.297756
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 5.202365913608899
+            }
+        },
+        {
+            "renderer": "bladepdf",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.648432,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": 8,
+            "over_declared_concurrency": false,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 646.41,
+            "p95_ms": 646.41,
+            "p99_ms": 646.41,
+            "mean_ms": 646.41,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 160537,
+            "attempted_throughput": 1.5421817553729613,
+            "successful_throughput": 1.5421817553729613,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9968817084906357,
+            "worker_utilization_pct": 99.68817084906357,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "bladepdf__default__modern-invoice__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 84475904,
+                    "process_count": 1,
+                    "php_rss_bytes": 84475904,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.15999999999999998,
+                    "cpu_utilization_pct": 6.168727021491844
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 2170605
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.330249
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 6.168727021491844
+            }
+        },
+        {
+            "renderer": "bladepdf",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.862608,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": 8,
+            "over_declared_concurrency": false,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 860.704,
+            "p95_ms": 860.704,
+            "p99_ms": 860.704,
+            "mean_ms": 860.704,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 63798,
+            "attempted_throughput": 1.159275128447684,
+            "successful_throughput": 1.159275128447684,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9977927401554355,
+            "worker_utilization_pct": 99.77927401554355,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "bladepdf__default__simple-invoice__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 84303872,
+                    "process_count": 1,
+                    "php_rss_bytes": 84303872,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.15000000000000002,
+                    "cpu_utilization_pct": 4.347281731678816
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 77619
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.302208
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 4.347281731678816
+            }
+        },
+        {
+            "renderer": "browsershot",
+            "variant": "default",
+            "template": "javascript-chart",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 2.792193,
+            "cold_label": "fresh browser per render",
+            "topology": "application-descendant",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 2787.002,
+            "p95_ms": 2787.002,
+            "p99_ms": 2787.002,
+            "mean_ms": 2787.002,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 60283,
+            "attempted_throughput": 0.35814143220042455,
+            "successful_throughput": 0.35814143220042455,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9981408878254474,
+            "worker_utilization_pct": 99.81408878254474,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot__default__javascript-chart__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 875085824,
+                    "process_count": 10,
+                    "php_rss_bytes": 78766080,
+                    "node_rss_bytes": 93577216,
+                    "chrome_rss_bytes": 703946752,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 4.220000000000001,
+                    "cpu_utilization_pct": 37.78392109714479
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 175064,
+                    "run_artifacts_bytes_after_block": 206205
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.302022
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 37.78392109714479
+            }
+        },
+        {
+            "renderer": "browsershot",
+            "variant": "default",
+            "template": "local-assets",
+            "asset_mode": "documented-remediation",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 2.663235,
+            "cold_label": "fresh browser per render",
+            "topology": "application-descendant",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 2658.153,
+            "p95_ms": 2658.153,
+            "p99_ms": 2658.153,
+            "mean_ms": 2658.153,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 61652,
+            "attempted_throughput": 0.37548319994292656,
+            "successful_throughput": 0.37548319994292656,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9980917943778901,
+            "worker_utilization_pct": 99.80917943778901,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot__default__local-assets__documented-remediation__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 864858112,
+                    "process_count": 10,
+                    "php_rss_bytes": 80867328,
+                    "node_rss_bytes": 93290496,
+                    "chrome_rss_bytes": 690700288,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 3.9700000000000006,
+                    "cpu_utilization_pct": 37.26670759433547
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 173996,
+                    "run_artifacts_bytes_after_block": 1508481
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.362755
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 37.26670759433547
+            }
+        },
+        {
+            "renderer": "browsershot",
+            "variant": "default",
+            "template": "local-assets",
+            "asset_mode": "native-path",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 2.723468,
+            "cold_label": "fresh browser per render",
+            "topology": "application-descendant",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 2462.757,
+            "p95_ms": 2462.757,
+            "p99_ms": 2462.757,
+            "mean_ms": 2462.757,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 29963,
+            "attempted_throughput": 0.367178905718738,
+            "successful_throughput": 0.367178905718738,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9042724203111621,
+            "worker_utilization_pct": 90.42724203111621,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot__default__local-assets__native-path__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 853139456,
+                    "process_count": 10,
+                    "php_rss_bytes": 78766080,
+                    "node_rss_bytes": 91992064,
+                    "chrome_rss_bytes": 682467328,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 3.93,
+                    "cpu_utilization_pct": 36.07532748686601
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 43260,
+                    "run_artifacts_bytes_after_block": 2345819
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.000184
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 36.07532748686601
+            }
+        },
+        {
+            "renderer": "browsershot",
+            "variant": "default",
+            "template": "long-report",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 3.009387,
+            "cold_label": "fresh browser per render",
+            "topology": "application-descendant",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 3007.296,
+            "p95_ms": 3007.296,
+            "p99_ms": 3007.296,
+            "mean_ms": 3007.296,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 364059,
+            "attempted_throughput": 0.3322935867005473,
+            "successful_throughput": 0.3322935867005473,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9993051741102091,
+            "worker_utilization_pct": 99.93051741102092,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot__default__long-report__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 881049600,
+                    "process_count": 10,
+                    "php_rss_bytes": 80871424,
+                    "node_rss_bytes": 97554432,
+                    "chrome_rss_bytes": 709910528,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 4.69,
+                    "cpu_utilization_pct": 38.96142304063918
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 168421,
+                    "run_artifacts_bytes_after_block": 2713796
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.347421
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 38.96142304063918
+            }
+        },
+        {
+            "renderer": "browsershot",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 3.125919,
+            "cold_label": "fresh browser per render",
+            "topology": "application-descendant",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 3120.158,
+            "p95_ms": 3120.158,
+            "p99_ms": 3120.158,
+            "mean_ms": 3120.158,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 160537,
+            "attempted_throughput": 0.3199059220664387,
+            "successful_throughput": 0.3199059220664387,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9981570219829752,
+            "worker_utilization_pct": 99.81570219829752,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot__default__modern-invoice__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 864493568,
+                    "process_count": 10,
+                    "php_rss_bytes": 80871424,
+                    "node_rss_bytes": 94740480,
+                    "chrome_rss_bytes": 693669888,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 4.75,
+                    "cpu_utilization_pct": 37.98882824538959
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 154601,
+                    "run_artifacts_bytes_after_block": 536516
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.332601
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 37.98882824538959
+            }
+        },
+        {
+            "renderer": "browsershot",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 2.653715,
+            "cold_label": "fresh browser per render",
+            "topology": "application-descendant",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 2648.641,
+            "p95_ms": 2648.641,
+            "p99_ms": 2648.641,
+            "mean_ms": 2648.641,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 62885,
+            "attempted_throughput": 0.37683021726146176,
+            "successful_throughput": 0.37683021726146176,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9980879634776153,
+            "worker_utilization_pct": 99.80879634776153,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "browsershot__default__simple-invoice__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 849448960,
+                    "process_count": 10,
+                    "php_rss_bytes": 78778368,
+                    "node_rss_bytes": 92745728,
+                    "chrome_rss_bytes": 678326272,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 4.07,
+                    "cpu_utilization_pct": 38.34247460635374
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 52176,
+                    "run_artifacts_bytes_after_block": 2937255
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.288298
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 38.34247460635374
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "javascript-chart",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.8066,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 800.808,
+            "p95_ms": 800.808,
+            "p99_ms": 800.808,
+            "mean_ms": 800.808,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 41688,
+            "attempted_throughput": 1.239771881973717,
+            "successful_throughput": 1.239771881973717,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9928192412596082,
+            "worker_utilization_pct": 99.28192412596081,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__javascript-chart__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 82333696,
+                    "process_count": 1,
+                    "php_rss_bytes": 82333696,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.12,
+                    "cpu_utilization_pct": 3.7193156459211507
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 1554368
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.289957
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 3.7193156459211507
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "local-assets",
+            "asset_mode": "native-path",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.847419,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 846.785,
+            "p95_ms": 846.785,
+            "p99_ms": 846.785,
+            "mean_ms": 846.785,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 34541,
+            "attempted_throughput": 1.1800537868516046,
+            "successful_throughput": 1.1800537868516046,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9992518458991361,
+            "worker_utilization_pct": 99.92518458991361,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__local-assets__native-path__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 82145280,
+                    "process_count": 1,
+                    "php_rss_bytes": 82145280,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.12,
+                    "cpu_utilization_pct": 3.540161360554814
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 277261
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.299032
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 3.540161360554814
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "local-assets",
+            "asset_mode": "documented-remediation",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.806282,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 539.797,
+            "p95_ms": 539.797,
+            "p99_ms": 539.797,
+            "mean_ms": 539.797,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 77641,
+            "attempted_throughput": 1.2402608516623215,
+            "successful_throughput": 1.2402608516623215,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.6694890869447662,
+            "worker_utilization_pct": 66.94890869447661,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__local-assets__documented-remediation__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 82333696,
+                    "process_count": 1,
+                    "php_rss_bytes": 82333696,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.34,
+                    "cpu_utilization_pct": 10.542217239129734
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 2870281
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.000215
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 10.542217239129734
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "long-report",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 1.307209,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 1305.344,
+            "p95_ms": 1305.344,
+            "p99_ms": 1305.344,
+            "mean_ms": 1305.344,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 519313,
+            "attempted_throughput": 0.7649886131444933,
+            "successful_throughput": 0.7649886131444933,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9985732962364855,
+            "worker_utilization_pct": 99.85732962364855,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__long-report__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 82440192,
+                    "process_count": 1,
+                    "php_rss_bytes": 82440192,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.13,
+                    "cpu_utilization_pct": 2.486212992719603
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 1319174
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.305544
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 2.486212992719603
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.880029,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 875.934,
+            "p95_ms": 875.934,
+            "p99_ms": 875.934,
+            "mean_ms": 875.934,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 206819,
+            "attempted_throughput": 1.1363261892505816,
+            "successful_throughput": 1.1363261892505816,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9953467442550189,
+            "worker_utilization_pct": 99.53467442550189,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__modern-invoice__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 86827008,
+                    "process_count": 1,
+                    "php_rss_bytes": 86827008,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.12999999999999995,
+                    "cpu_utilization_pct": 3.6930601150643887
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 3148203
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.321299
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 3.6930601150643887
+            }
+        },
+        {
+            "renderer": "cloudflare",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.952734,
+            "cold_label": "first observed API request",
+            "topology": "external-managed-provider",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 949.851,
+            "p95_ms": 949.851,
+            "p99_ms": 949.851,
+            "mean_ms": 949.851,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 79160,
+            "attempted_throughput": 1.0496109092359462,
+            "successful_throughput": 1.0496109092359462,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9969739717486727,
+            "worker_utilization_pct": 99.69739717486728,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "cloudflare__default__simple-invoice__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 82173952,
+                    "process_count": 1,
+                    "php_rss_bytes": 82173952,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.15999999999999998,
+                    "cpu_utilization_pct": 4.198443636943784
+                },
+                "render_service": null,
+                "external_provider": {
+                    "resources": null,
+                    "reason": "Provider-side resource consumption is not observable."
+                },
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 1637787
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.310362
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": {
+                        "depth": null,
+                        "reason": "Provider-side queue depth is not observable."
+                    }
+                },
+                "observed_cpu_utilization_pct": 4.198443636943784
+            }
+        },
+        {
+            "renderer": "dompdf",
+            "variant": "default",
+            "template": "javascript-chart",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.108695,
+            "cold_label": "fresh worker",
+            "topology": "application-process",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 106.22,
+            "p95_ms": 106.22,
+            "p99_ms": 106.22,
+            "mean_ms": 106.22,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 7601,
+            "attempted_throughput": 9.200055200331201,
+            "successful_throughput": 9.200055200331201,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9772298633791803,
+            "worker_utilization_pct": 97.72298633791803,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "dompdf__default__javascript-chart__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 78438400,
+                    "process_count": 1,
+                    "php_rss_bytes": 78438400,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.12,
+                    "cpu_utilization_pct": 27.600165600993602
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 2725296
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.289623
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 27.600165600993602
+            }
+        },
+        {
+            "renderer": "dompdf",
+            "variant": "default",
+            "template": "local-assets",
+            "asset_mode": "documented-remediation",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.111074,
+            "cold_label": "fresh worker",
+            "topology": "application-process",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 105.934,
+            "p95_ms": 105.934,
+            "p99_ms": 105.934,
+            "mean_ms": 105.934,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 7006,
+            "attempted_throughput": 9.003007004339448,
+            "successful_throughput": 9.003007004339448,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9537245439976951,
+            "worker_utilization_pct": 95.37245439976951,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "dompdf__default__local-assets__documented-remediation__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 78598144,
+                    "process_count": 1,
+                    "php_rss_bytes": 78598144,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.12,
+                    "cpu_utilization_pct": 27.009021013018348
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 1397273
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.303546
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 27.009021013018348
+            }
+        },
+        {
+            "renderer": "dompdf",
+            "variant": "default",
+            "template": "local-assets",
+            "asset_mode": "native-path",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.377351,
+            "cold_label": "fresh worker",
+            "topology": "application-process",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 97.308,
+            "p95_ms": 97.308,
+            "p99_ms": 97.308,
+            "mean_ms": 97.308,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 7092,
+            "attempted_throughput": 2.6500526035441805,
+            "successful_throughput": 2.6500526035441805,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.25787131874567715,
+            "worker_utilization_pct": 25.787131874567713,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "dompdf__default__local-assets__native-path__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 78819328,
+                    "process_count": 1,
+                    "php_rss_bytes": 78819328,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.36,
+                    "cpu_utilization_pct": 23.850473431897623
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 1407269
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.000754
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 23.850473431897623
+            }
+        },
+        {
+            "renderer": "dompdf",
+            "variant": "default",
+            "template": "long-report",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.444607,
+            "cold_label": "fresh worker",
+            "topology": "application-process",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 442.472,
+            "p95_ms": 442.472,
+            "p99_ms": 442.472,
+            "mean_ms": 442.472,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 44450,
+            "attempted_throughput": 2.249177363379344,
+            "successful_throughput": 2.249177363379344,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9951980063291851,
+            "worker_utilization_pct": 99.5198006329185,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "dompdf__default__long-report__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 104312832,
+                    "process_count": 1,
+                    "php_rss_bytes": 104312832,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.45,
+                    "cpu_utilization_pct": 25.30324533801762
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 2219056
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.338649
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 25.30324533801762
+            }
+        },
+        {
+            "renderer": "dompdf",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.148642,
+            "cold_label": "fresh worker",
+            "topology": "application-process",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 146.318,
+            "p95_ms": 146.318,
+            "p99_ms": 146.318,
+            "mean_ms": 146.318,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 25263,
+            "attempted_throughput": 6.727573633293416,
+            "successful_throughput": 6.727573633293416,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9843651188762261,
+            "worker_utilization_pct": 98.43651188762261,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "dompdf__default__modern-invoice__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 87465984,
+                    "process_count": 1,
+                    "php_rss_bytes": 87465984,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.12,
+                    "cpu_utilization_pct": 20.18272089988025
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 2248173
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.30258
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 20.18272089988025
+            }
+        },
+        {
+            "renderer": "dompdf",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.187591,
+            "cold_label": "fresh worker",
+            "topology": "application-process",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 187.066,
+            "p95_ms": 187.066,
+            "p99_ms": 187.066,
+            "mean_ms": 187.066,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 28491,
+            "attempted_throughput": 5.330746144537851,
+            "successful_throughput": 5.330746144537851,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9972013582741176,
+            "worker_utilization_pct": 99.72013582741177,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "dompdf__default__simple-invoice__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 96894976,
+                    "process_count": 1,
+                    "php_rss_bytes": 96894976,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.15999999999999998,
+                    "cpu_utilization_pct": 21.3229845781514
+                },
+                "render_service": null,
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 238609
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.286791
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 21.3229845781514
+            }
+        },
+        {
+            "renderer": "gotenberg",
+            "variant": "default",
+            "template": "javascript-chart",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.455859,
+            "cold_label": "first request after controlled container restart",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 451.765,
+            "p95_ms": 451.765,
+            "p99_ms": 451.765,
+            "mean_ms": 451.765,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 60580,
+            "attempted_throughput": 2.1936607591382424,
+            "successful_throughput": 2.1936607591382424,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.991019152852088,
+            "worker_utilization_pct": 99.1019152852088,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "gotenberg__default__javascript-chart__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 76660736,
+                    "process_count": 1,
+                    "php_rss_bytes": 76660736,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.04999999999999999,
+                    "cpu_utilization_pct": 2.7420759489228024
+                },
+                "render_service": {
+                    "service": "gotenberg",
+                    "memory_bytes": 770748416,
+                    "memory_limit_bytes": 8217706496,
+                    "pids": 121,
+                    "cpu_seconds_total": 138.621195,
+                    "telemetry_observable": true,
+                    "active_requests": 1,
+                    "queue_size": 1,
+                    "cpu_seconds_delta": 0.21222000000000207,
+                    "cpu_utilization_pct": 11.638467157608058
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 2312722
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.296594
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 14.380543106530862
+            }
+        },
+        {
+            "renderer": "gotenberg",
+            "variant": "default",
+            "template": "local-assets",
+            "asset_mode": "documented-remediation",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.176263,
+            "cold_label": "first request after controlled container restart",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 174.783,
+            "p95_ms": 174.783,
+            "p99_ms": 174.783,
+            "mean_ms": 174.783,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 59918,
+            "attempted_throughput": 5.673340406097706,
+            "successful_throughput": 5.673340406097706,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9916034561989754,
+            "worker_utilization_pct": 99.16034561989754,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "gotenberg__default__local-assets__documented-remediation__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 76476416,
+                    "process_count": 1,
+                    "php_rss_bytes": 76476416,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.07,
+                    "cpu_utilization_pct": 9.928345710670987
+                },
+                "render_service": {
+                    "service": "gotenberg",
+                    "memory_bytes": 761114624,
+                    "memory_limit_bytes": 8217706496,
+                    "pids": 121,
+                    "cpu_seconds_total": 137.202299,
+                    "telemetry_observable": true,
+                    "active_requests": 1,
+                    "queue_size": 1,
+                    "cpu_seconds_delta": 0.19702399999999898,
+                    "cpu_utilization_pct": 27.944605504274715
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 141732
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.301479
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 37.8729512149457
+            }
+        },
+        {
+            "renderer": "gotenberg",
+            "variant": "default",
+            "template": "local-assets",
+            "asset_mode": "native-path",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.392611,
+            "cold_label": "first request after controlled container restart",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 138.737,
+            "p95_ms": 138.737,
+            "p99_ms": 138.737,
+            "mean_ms": 138.737,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 27046,
+            "attempted_throughput": 2.5470503882978317,
+            "successful_throughput": 2.5470503882978317,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.3533701297212763,
+            "worker_utilization_pct": 35.33701297212763,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "gotenberg__default__local-assets__native-path__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 78585856,
+                    "process_count": 1,
+                    "php_rss_bytes": 78585856,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.38,
+                    "cpu_utilization_pct": 24.1969786888294
+                },
+                "render_service": {
+                    "service": "gotenberg",
+                    "memory_bytes": 731328512,
+                    "memory_limit_bytes": 8217706496,
+                    "pids": 111,
+                    "cpu_seconds_total": 137.519981,
+                    "telemetry_observable": true,
+                    "active_requests": 0,
+                    "queue_size": 0,
+                    "cpu_seconds_delta": 0.19169500000000994,
+                    "cpu_utilization_pct": 12.206420604619455
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 371838
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.000209
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 36.40339929344886
+            }
+        },
+        {
+            "renderer": "gotenberg",
+            "variant": "default",
+            "template": "long-report",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.18657,
+            "cold_label": "first request after controlled container restart",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 185.341,
+            "p95_ms": 185.341,
+            "p99_ms": 185.341,
+            "mean_ms": 185.341,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 104174,
+            "attempted_throughput": 5.359918529238355,
+            "successful_throughput": 5.359918529238355,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.993412660127566,
+            "worker_utilization_pct": 99.3412660127566,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "gotenberg__default__long-report__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 78426112,
+                    "process_count": 1,
+                    "php_rss_bytes": 78426112,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.08000000000000002,
+                    "cpu_utilization_pct": 10.719837058476713
+                },
+                "render_service": {
+                    "service": "gotenberg",
+                    "memory_bytes": 782684160,
+                    "memory_limit_bytes": 8217706496,
+                    "pids": 121,
+                    "cpu_seconds_total": 137.698905,
+                    "telemetry_observable": true,
+                    "active_requests": 1,
+                    "queue_size": 1,
+                    "cpu_seconds_delta": 0.14292299999999614,
+                    "cpu_utilization_pct": 19.151390898857816
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 644651
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.361074
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 29.87122795733453
+            }
+        },
+        {
+            "renderer": "gotenberg",
+            "variant": "default",
+            "template": "modern-invoice",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.193678,
+            "cold_label": "first request after controlled container restart",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 190.451,
+            "p95_ms": 190.451,
+            "p99_ms": 190.451,
+            "mean_ms": 190.451,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 146708,
+            "attempted_throughput": 5.1632090376811,
+            "successful_throughput": 5.1632090376811,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.983338324435403,
+            "worker_utilization_pct": 98.3338324435403,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "gotenberg__default__modern-invoice__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 78622720,
+                    "process_count": 1,
+                    "php_rss_bytes": 78622720,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.06,
+                    "cpu_utilization_pct": 7.74481355652165
+                },
+                "render_service": {
+                    "service": "gotenberg",
+                    "memory_bytes": 777555968,
+                    "memory_limit_bytes": 8217706496,
+                    "pids": 122,
+                    "cpu_seconds_total": 137.972731,
+                    "telemetry_observable": true,
+                    "active_requests": 1,
+                    "queue_size": 1,
+                    "cpu_seconds_delta": 0.1786220000000185,
+                    "cpu_utilization_pct": 23.05656811821922
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 795550
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.307652
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 30.80138167474087
+            }
+        },
+        {
+            "renderer": "gotenberg",
+            "variant": "default",
+            "template": "simple-invoice",
+            "asset_mode": "portable",
+            "scenario": "representative",
+            "phase": "fidelity",
+            "concurrency": 1,
+            "measured": false,
+            "attempt": 1,
+            "duration_seconds": 0.186125,
+            "cold_label": "first request after controlled container restart",
+            "topology": "local-render-service",
+            "declared_concurrency_limit": null,
+            "over_declared_concurrency": null,
+            "attempted": 1,
+            "successful": 1,
+            "failures": 0,
+            "timeouts": 0,
+            "p50_ms": 182.18,
+            "p95_ms": 182.18,
+            "p99_ms": 182.18,
+            "mean_ms": 182.18,
+            "stddev_ms": null,
+            "cv_pct": null,
+            "mean_pdf_bytes": 31379,
+            "attempted_throughput": 5.372733378106111,
+            "successful_throughput": 5.372733378106111,
+            "configured_concurrency": 1,
+            "peak_in_flight": 1,
+            "average_in_flight": 0.9788045668233714,
+            "worker_utilization_pct": 97.88045668233714,
+            "resources": {
+                "schema_version": 1,
+                "block_key": "gotenberg__default__simple-invoice__portable__representative",
+                "attempt": 1,
+                "application": {
+                    "aggregate_rss_bytes": 78647296,
+                    "process_count": 1,
+                    "php_rss_bytes": 78647296,
+                    "node_rss_bytes": 0,
+                    "chrome_rss_bytes": 0,
+                    "other_rss_bytes": 0,
+                    "cpu_seconds_total": 0.03999999999999998,
+                    "cpu_utilization_pct": 5.372733378106108
+                },
+                "render_service": {
+                    "service": "gotenberg",
+                    "memory_bytes": 788942848,
+                    "memory_limit_bytes": 8217706496,
+                    "pids": 122,
+                    "cpu_seconds_total": 138.245304,
+                    "telemetry_observable": true,
+                    "active_requests": 1,
+                    "queue_size": 1,
+                    "cpu_seconds_delta": 0.1783140000000003,
+                    "cpu_utilization_pct": 23.95083948959037
+                },
+                "external_provider": null,
+                "storage": {
+                    "benchmark_temp_peak_bytes": 41594,
+                    "run_artifacts_bytes_after_block": 1442598
+                },
+                "worker_barrier": {
+                    "expected_workers": 1,
+                    "ready_workers": 1,
+                    "wait_seconds": 0.459895
+                },
+                "load": {
+                    "offered_concurrency": 1,
+                    "planned_iterations": 1,
+                    "application_queue": {
+                        "depth": null,
+                        "reason": "The harness uses a fixed in-process worker pool and no application queue."
+                    },
+                    "provider_queue": null
+                },
+                "observed_cpu_utilization_pct": 29.323572867696477
+            }
+        }
+    ],
+    "fidelity_review": {
+        "schema_version": 1,
+        "run_id": "20260815-local-fidelity-v104",
+        "updated_at": "2026-08-15T16:33:41+00:00",
+        "entries": [
+            {
+                "key": "browsershot__simple-invoice__portable__table-layout",
+                "renderer": "browsershot",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "table-layout",
+                "label": "Table layout",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:17:32+00:00"
+            },
+            {
+                "key": "browsershot__simple-invoice__portable__manual-page-break",
+                "renderer": "browsershot",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "manual-page-break",
+                "label": "Two-page manual break",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:17:35+00:00"
+            },
+            {
+                "key": "browsershot__simple-invoice__portable__portable-png",
+                "renderer": "browsershot",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "portable-png",
+                "label": "Portable PNG logo",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:17:56+00:00"
+            },
+            {
+                "key": "dompdf__simple-invoice__portable__table-layout",
+                "renderer": "dompdf",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "table-layout",
+                "label": "Table layout",
+                "page": 1,
+                "status": "partial",
+                "problem": "Slight padding/offset mismatch",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:18:07+00:00"
+            },
+            {
+                "key": "dompdf__simple-invoice__portable__manual-page-break",
+                "renderer": "dompdf",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "manual-page-break",
+                "label": "Two-page manual break",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:18:10+00:00"
+            },
+            {
+                "key": "dompdf__simple-invoice__portable__portable-png",
+                "renderer": "dompdf",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "portable-png",
+                "label": "Portable PNG logo",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:18:13+00:00"
+            },
+            {
+                "key": "gotenberg__simple-invoice__portable__table-layout",
+                "renderer": "gotenberg",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "table-layout",
+                "label": "Table layout",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:18:17+00:00"
+            },
+            {
+                "key": "gotenberg__simple-invoice__portable__manual-page-break",
+                "renderer": "gotenberg",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "manual-page-break",
+                "label": "Two-page manual break",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:18:21+00:00"
+            },
+            {
+                "key": "gotenberg__simple-invoice__portable__portable-png",
+                "renderer": "gotenberg",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "portable-png",
+                "label": "Portable PNG logo",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:18:24+00:00"
+            },
+            {
+                "key": "cloudflare__simple-invoice__portable__table-layout",
+                "renderer": "cloudflare",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "table-layout",
+                "label": "Table layout",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:18:35+00:00"
+            },
+            {
+                "key": "cloudflare__simple-invoice__portable__manual-page-break",
+                "renderer": "cloudflare",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "manual-page-break",
+                "label": "Two-page manual break",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:18:40+00:00"
+            },
+            {
+                "key": "cloudflare__simple-invoice__portable__portable-png",
+                "renderer": "cloudflare",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "portable-png",
+                "label": "Portable PNG logo",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:18:42+00:00"
+            },
+            {
+                "key": "bladepdf__simple-invoice__portable__table-layout",
+                "renderer": "bladepdf",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "table-layout",
+                "label": "Table layout",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:18:51+00:00"
+            },
+            {
+                "key": "bladepdf__simple-invoice__portable__manual-page-break",
+                "renderer": "bladepdf",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "manual-page-break",
+                "label": "Two-page manual break",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:18:54+00:00"
+            },
+            {
+                "key": "bladepdf__simple-invoice__portable__portable-png",
+                "renderer": "bladepdf",
+                "template": "simple-invoice",
+                "asset_mode": "portable",
+                "feature": "portable-png",
+                "label": "Portable PNG logo",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:18:58+00:00"
+            },
+            {
+                "key": "browsershot__modern-invoice__portable__gradient-flexbox",
+                "renderer": "browsershot",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "gradient-flexbox",
+                "label": "Gradient and Flexbox",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:19:06+00:00"
+            },
+            {
+                "key": "browsershot__modern-invoice__portable__css-grid",
+                "renderer": "browsershot",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "css-grid",
+                "label": "CSS Grid",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:19:09+00:00"
+            },
+            {
+                "key": "browsershot__modern-invoice__portable__inline-svg",
+                "renderer": "browsershot",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "inline-svg",
+                "label": "Inline SVG",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:19:13+00:00"
+            },
+            {
+                "key": "browsershot__modern-invoice__portable__custom-font",
+                "renderer": "browsershot",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "custom-font",
+                "label": "Inter WOFF2",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:19:17+00:00"
+            },
+            {
+                "key": "dompdf__modern-invoice__portable__gradient-flexbox",
+                "renderer": "dompdf",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "gradient-flexbox",
+                "label": "Gradient and Flexbox",
+                "page": 1,
+                "status": "fail",
+                "problem": "Missing gradient and likely incorrect flexbox layout",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:19:45+00:00"
+            },
+            {
+                "key": "dompdf__modern-invoice__portable__css-grid",
+                "renderer": "dompdf",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "css-grid",
+                "label": "CSS Grid",
+                "page": 1,
+                "status": "fail",
+                "problem": "Incorrect CSS grid layout",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:20:09+00:00"
+            },
+            {
+                "key": "dompdf__modern-invoice__portable__inline-svg",
+                "renderer": "dompdf",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "inline-svg",
+                "label": "Inline SVG",
+                "page": 1,
+                "status": "fail",
+                "problem": "SVG images are not rendering correctly",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:20:29+00:00"
+            },
+            {
+                "key": "dompdf__modern-invoice__portable__custom-font",
+                "renderer": "dompdf",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "custom-font",
+                "label": "Inter WOFF2",
+                "page": 1,
+                "status": "fail",
+                "problem": "Looks like a different font is being used",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:21:33+00:00"
+            },
+            {
+                "key": "gotenberg__modern-invoice__portable__gradient-flexbox",
+                "renderer": "gotenberg",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "gradient-flexbox",
+                "label": "Gradient and Flexbox",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:21:45+00:00"
+            },
+            {
+                "key": "gotenberg__modern-invoice__portable__css-grid",
+                "renderer": "gotenberg",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "css-grid",
+                "label": "CSS Grid",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:21:50+00:00"
+            },
+            {
+                "key": "gotenberg__modern-invoice__portable__inline-svg",
+                "renderer": "gotenberg",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "inline-svg",
+                "label": "Inline SVG",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:21:53+00:00"
+            },
+            {
+                "key": "gotenberg__modern-invoice__portable__custom-font",
+                "renderer": "gotenberg",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "custom-font",
+                "label": "Inter WOFF2",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:22:01+00:00"
+            },
+            {
+                "key": "cloudflare__modern-invoice__portable__gradient-flexbox",
+                "renderer": "cloudflare",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "gradient-flexbox",
+                "label": "Gradient and Flexbox",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:22:11+00:00"
+            },
+            {
+                "key": "cloudflare__modern-invoice__portable__css-grid",
+                "renderer": "cloudflare",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "css-grid",
+                "label": "CSS Grid",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:22:21+00:00"
+            },
+            {
+                "key": "cloudflare__modern-invoice__portable__inline-svg",
+                "renderer": "cloudflare",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "inline-svg",
+                "label": "Inline SVG",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:22:24+00:00"
+            },
+            {
+                "key": "cloudflare__modern-invoice__portable__custom-font",
+                "renderer": "cloudflare",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "custom-font",
+                "label": "Inter WOFF2",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:22:31+00:00"
+            },
+            {
+                "key": "bladepdf__modern-invoice__portable__gradient-flexbox",
+                "renderer": "bladepdf",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "gradient-flexbox",
+                "label": "Gradient and Flexbox",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:22:35+00:00"
+            },
+            {
+                "key": "bladepdf__modern-invoice__portable__css-grid",
+                "renderer": "bladepdf",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "css-grid",
+                "label": "CSS Grid",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:22:38+00:00"
+            },
+            {
+                "key": "bladepdf__modern-invoice__portable__inline-svg",
+                "renderer": "bladepdf",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "inline-svg",
+                "label": "Inline SVG",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:22:42+00:00"
+            },
+            {
+                "key": "bladepdf__modern-invoice__portable__custom-font",
+                "renderer": "bladepdf",
+                "template": "modern-invoice",
+                "asset_mode": "portable",
+                "feature": "custom-font",
+                "label": "Inter WOFF2",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:22:45+00:00"
+            },
+            {
+                "key": "browsershot__long-report__portable__ten-pages",
+                "renderer": "browsershot",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "ten-pages",
+                "label": "Ten-page chapter pagination",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:23:09+00:00"
+            },
+            {
+                "key": "browsershot__long-report__portable__long-table",
+                "renderer": "browsershot",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "long-table",
+                "label": "Long table and repeated header",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:23:13+00:00"
+            },
+            {
+                "key": "browsershot__long-report__portable__chart",
+                "renderer": "browsershot",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "chart",
+                "label": "Deterministic chart",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:23:23+00:00"
+            },
+            {
+                "key": "dompdf__long-report__portable__ten-pages",
+                "renderer": "dompdf",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "ten-pages",
+                "label": "Ten-page chapter pagination",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:23:37+00:00"
+            },
+            {
+                "key": "dompdf__long-report__portable__long-table",
+                "renderer": "dompdf",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "long-table",
+                "label": "Long table and repeated header",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:23:58+00:00"
+            },
+            {
+                "key": "dompdf__long-report__portable__chart",
+                "renderer": "dompdf",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "chart",
+                "label": "Deterministic chart",
+                "page": 1,
+                "status": "fail",
+                "problem": "The chart is not rendering",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:24:23+00:00"
+            },
+            {
+                "key": "gotenberg__long-report__portable__ten-pages",
+                "renderer": "gotenberg",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "ten-pages",
+                "label": "Ten-page chapter pagination",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:24:50+00:00"
+            },
+            {
+                "key": "gotenberg__long-report__portable__long-table",
+                "renderer": "gotenberg",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "long-table",
+                "label": "Long table and repeated header",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:24:55+00:00"
+            },
+            {
+                "key": "gotenberg__long-report__portable__chart",
+                "renderer": "gotenberg",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "chart",
+                "label": "Deterministic chart",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:25:04+00:00"
+            },
+            {
+                "key": "cloudflare__long-report__portable__ten-pages",
+                "renderer": "cloudflare",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "ten-pages",
+                "label": "Ten-page chapter pagination",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:25:18+00:00"
+            },
+            {
+                "key": "cloudflare__long-report__portable__long-table",
+                "renderer": "cloudflare",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "long-table",
+                "label": "Long table and repeated header",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:25:22+00:00"
+            },
+            {
+                "key": "cloudflare__long-report__portable__chart",
+                "renderer": "cloudflare",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "chart",
+                "label": "Deterministic chart",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:25:25+00:00"
+            },
+            {
+                "key": "bladepdf__long-report__portable__ten-pages",
+                "renderer": "bladepdf",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "ten-pages",
+                "label": "Ten-page chapter pagination",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:25:38+00:00"
+            },
+            {
+                "key": "bladepdf__long-report__portable__long-table",
+                "renderer": "bladepdf",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "long-table",
+                "label": "Long table and repeated header",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:25:41+00:00"
+            },
+            {
+                "key": "bladepdf__long-report__portable__chart",
+                "renderer": "bladepdf",
+                "template": "long-report",
+                "asset_mode": "portable",
+                "feature": "chart",
+                "label": "Deterministic chart",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:25:44+00:00"
+            },
+            {
+                "key": "browsershot__javascript-chart__portable__javascript-canvas",
+                "renderer": "browsershot",
+                "template": "javascript-chart",
+                "asset_mode": "portable",
+                "feature": "javascript-canvas",
+                "label": "JavaScript canvas chart",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:25:50+00:00"
+            },
+            {
+                "key": "browsershot__javascript-chart__portable__delayed-content",
+                "renderer": "browsershot",
+                "template": "javascript-chart",
+                "asset_mode": "portable",
+                "feature": "delayed-content",
+                "label": "Delayed readiness content",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:25:59+00:00"
+            },
+            {
+                "key": "dompdf__javascript-chart__portable__javascript-canvas",
+                "renderer": "dompdf",
+                "template": "javascript-chart",
+                "asset_mode": "portable",
+                "feature": "javascript-canvas",
+                "label": "JavaScript canvas chart",
+                "page": 1,
+                "status": "fail",
+                "problem": "The canvas chart is not rendering",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:26:24+00:00"
+            },
+            {
+                "key": "dompdf__javascript-chart__portable__delayed-content",
+                "renderer": "dompdf",
+                "template": "javascript-chart",
+                "asset_mode": "portable",
+                "feature": "delayed-content",
+                "label": "Delayed readiness content",
+                "page": 1,
+                "status": "fail",
+                "problem": "Delayed readiness is not working",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:26:55+00:00"
+            },
+            {
+                "key": "gotenberg__javascript-chart__portable__javascript-canvas",
+                "renderer": "gotenberg",
+                "template": "javascript-chart",
+                "asset_mode": "portable",
+                "feature": "javascript-canvas",
+                "label": "JavaScript canvas chart",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:27:02+00:00"
+            },
+            {
+                "key": "gotenberg__javascript-chart__portable__delayed-content",
+                "renderer": "gotenberg",
+                "template": "javascript-chart",
+                "asset_mode": "portable",
+                "feature": "delayed-content",
+                "label": "Delayed readiness content",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:27:06+00:00"
+            },
+            {
+                "key": "cloudflare__javascript-chart__portable__javascript-canvas",
+                "renderer": "cloudflare",
+                "template": "javascript-chart",
+                "asset_mode": "portable",
+                "feature": "javascript-canvas",
+                "label": "JavaScript canvas chart",
+                "page": 1,
+                "status": "fail",
+                "problem": "The canvas chart is not rendering",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:27:16+00:00"
+            },
+            {
+                "key": "cloudflare__javascript-chart__portable__delayed-content",
+                "renderer": "cloudflare",
+                "template": "javascript-chart",
+                "asset_mode": "portable",
+                "feature": "delayed-content",
+                "label": "Delayed readiness content",
+                "page": 1,
+                "status": "fail",
+                "problem": "Delayed readiness is not working",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:27:24+00:00"
+            },
+            {
+                "key": "bladepdf__javascript-chart__portable__javascript-canvas",
+                "renderer": "bladepdf",
+                "template": "javascript-chart",
+                "asset_mode": "portable",
+                "feature": "javascript-canvas",
+                "label": "JavaScript canvas chart",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:27:30+00:00"
+            },
+            {
+                "key": "bladepdf__javascript-chart__portable__delayed-content",
+                "renderer": "bladepdf",
+                "template": "javascript-chart",
+                "asset_mode": "portable",
+                "feature": "delayed-content",
+                "label": "Delayed readiness content",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:27:36+00:00"
+            },
+            {
+                "key": "browsershot__local-assets__native-path__local-png",
+                "renderer": "browsershot",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "local-png",
+                "label": "public_path PNG",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:27:41+00:00"
+            },
+            {
+                "key": "browsershot__local-assets__native-path__vite-css",
+                "renderer": "browsershot",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "vite-css",
+                "label": "Vite CSS",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:27:44+00:00"
+            },
+            {
+                "key": "browsershot__local-assets__native-path__storage-font",
+                "renderer": "browsershot",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "storage-font",
+                "label": "storage_path WOFF2",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:27:52+00:00"
+            },
+            {
+                "key": "dompdf__local-assets__native-path__local-png",
+                "renderer": "dompdf",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "local-png",
+                "label": "public_path PNG",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:27:57+00:00"
+            },
+            {
+                "key": "dompdf__local-assets__native-path__vite-css",
+                "renderer": "dompdf",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "vite-css",
+                "label": "Vite CSS",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:28:01+00:00"
+            },
+            {
+                "key": "dompdf__local-assets__native-path__storage-font",
+                "renderer": "dompdf",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "storage-font",
+                "label": "storage_path WOFF2",
+                "page": 1,
+                "status": "fail",
+                "problem": "Looks like a different font is being used",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:28:17+00:00"
+            },
+            {
+                "key": "gotenberg__local-assets__native-path__local-png",
+                "renderer": "gotenberg",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "local-png",
+                "label": "public_path PNG",
+                "page": 1,
+                "status": "fail",
+                "problem": "The image is not rendering",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:28:39+00:00"
+            },
+            {
+                "key": "gotenberg__local-assets__native-path__vite-css",
+                "renderer": "gotenberg",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "vite-css",
+                "label": "Vite CSS",
+                "page": 1,
+                "status": "fail",
+                "problem": "Vite CSS is not working",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:28:58+00:00"
+            },
+            {
+                "key": "gotenberg__local-assets__native-path__storage-font",
+                "renderer": "gotenberg",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "storage-font",
+                "label": "storage_path WOFF2",
+                "page": 1,
+                "status": "fail",
+                "problem": "Looks like a different font is being used",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:29:50+00:00"
+            },
+            {
+                "key": "cloudflare__local-assets__native-path__local-png",
+                "renderer": "cloudflare",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "local-png",
+                "label": "public_path PNG",
+                "page": 1,
+                "status": "fail",
+                "problem": "The image is not rendering",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:30:01+00:00"
+            },
+            {
+                "key": "cloudflare__local-assets__native-path__vite-css",
+                "renderer": "cloudflare",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "vite-css",
+                "label": "Vite CSS",
+                "page": 1,
+                "status": "fail",
+                "problem": "Vite CSS is not working",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:30:10+00:00"
+            },
+            {
+                "key": "cloudflare__local-assets__native-path__storage-font",
+                "renderer": "cloudflare",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "storage-font",
+                "label": "storage_path WOFF2",
+                "page": 1,
+                "status": "fail",
+                "problem": "Looks like a different font is being used",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:30:26+00:00"
+            },
+            {
+                "key": "bladepdf__local-assets__native-path__local-png",
+                "renderer": "bladepdf",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "local-png",
+                "label": "public_path PNG",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:30:31+00:00"
+            },
+            {
+                "key": "bladepdf__local-assets__native-path__vite-css",
+                "renderer": "bladepdf",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "vite-css",
+                "label": "Vite CSS",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:30:36+00:00"
+            },
+            {
+                "key": "bladepdf__local-assets__native-path__storage-font",
+                "renderer": "bladepdf",
+                "template": "local-assets",
+                "asset_mode": "native-path",
+                "feature": "storage-font",
+                "label": "storage_path WOFF2",
+                "page": 1,
+                "status": "fail",
+                "problem": "Looks like a different font is being used",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:31:30+00:00"
+            },
+            {
+                "key": "browsershot__local-assets__documented-remediation__local-png",
+                "renderer": "browsershot",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "local-png",
+                "label": "public_path PNG",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:31:34+00:00"
+            },
+            {
+                "key": "browsershot__local-assets__documented-remediation__vite-css",
+                "renderer": "browsershot",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "vite-css",
+                "label": "Vite CSS",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:31:38+00:00"
+            },
+            {
+                "key": "browsershot__local-assets__documented-remediation__storage-font",
+                "renderer": "browsershot",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "storage-font",
+                "label": "storage_path WOFF2",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:31:42+00:00"
+            },
+            {
+                "key": "dompdf__local-assets__documented-remediation__local-png",
+                "renderer": "dompdf",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "local-png",
+                "label": "public_path PNG",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:31:47+00:00"
+            },
+            {
+                "key": "dompdf__local-assets__documented-remediation__vite-css",
+                "renderer": "dompdf",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "vite-css",
+                "label": "Vite CSS",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:31:53+00:00"
+            },
+            {
+                "key": "dompdf__local-assets__documented-remediation__storage-font",
+                "renderer": "dompdf",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "storage-font",
+                "label": "storage_path WOFF2",
+                "page": 1,
+                "status": "fail",
+                "problem": "Looks like a different font is being used",
+                "note": null,
+                "reviewed_at": "2026-08-15T16:32:21+00:00"
+            },
+            {
+                "key": "gotenberg__local-assets__documented-remediation__local-png",
+                "renderer": "gotenberg",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "local-png",
+                "label": "public_path PNG",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:32:26+00:00"
+            },
+            {
+                "key": "gotenberg__local-assets__documented-remediation__vite-css",
+                "renderer": "gotenberg",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "vite-css",
+                "label": "Vite CSS",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:32:29+00:00"
+            },
+            {
+                "key": "gotenberg__local-assets__documented-remediation__storage-font",
+                "renderer": "gotenberg",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "storage-font",
+                "label": "storage_path WOFF2",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:32:43+00:00"
+            },
+            {
+                "key": "cloudflare__local-assets__documented-remediation__local-png",
+                "renderer": "cloudflare",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "local-png",
+                "label": "public_path PNG",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:32:50+00:00"
+            },
+            {
+                "key": "cloudflare__local-assets__documented-remediation__vite-css",
+                "renderer": "cloudflare",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "vite-css",
+                "label": "Vite CSS",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:32:57+00:00"
+            },
+            {
+                "key": "cloudflare__local-assets__documented-remediation__storage-font",
+                "renderer": "cloudflare",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "storage-font",
+                "label": "storage_path WOFF2",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:33:25+00:00"
+            },
+            {
+                "key": "bladepdf__local-assets__documented-remediation__local-png",
+                "renderer": "bladepdf",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "local-png",
+                "label": "public_path PNG",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:33:29+00:00"
+            },
+            {
+                "key": "bladepdf__local-assets__documented-remediation__vite-css",
+                "renderer": "bladepdf",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "vite-css",
+                "label": "Vite CSS",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:33:33+00:00"
+            },
+            {
+                "key": "bladepdf__local-assets__documented-remediation__storage-font",
+                "renderer": "bladepdf",
+                "template": "local-assets",
+                "asset_mode": "documented-remediation",
+                "feature": "storage-font",
+                "label": "storage_path WOFF2",
+                "page": 1,
+                "status": "pass",
+                "problem": null,
+                "note": null,
+                "reviewed_at": "2026-08-15T16:33:41+00:00"
+            }
+        ]
+    },
+    "costs": null,
+    "cost_note": "No local, uncommitted pricing snapshot was provided."
+}

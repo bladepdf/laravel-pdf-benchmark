@@ -1,0 +1,19 @@
+{
+    "run_id": "20260815-local-fidelity-v104",
+    "renderer": "gotenberg",
+    "variant": "default",
+    "template": "long-report",
+    "scenario": "representative",
+    "phase": "fidelity",
+    "asset_mode": "portable",
+    "attempt": 1,
+    "worker": 1,
+    "iterations": [
+        1
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260815-local-fidelity-v104\/tmp\/barrier-gotenberg-long-report-representative-a1\/worker-1.ready",
+    "start_path": "\/workspace\/results\/runs\/20260815-local-fidelity-v104\/tmp\/barrier-gotenberg-long-report-representative-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260815-local-fidelity-v104\/tmp\/artifact-gotenberg-long-report-portable-representative-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260815-local-fidelity-v104\/raw\/attempts\/gotenberg__default__long-report__portable__representative\/a1-w1.jsonl"
+}

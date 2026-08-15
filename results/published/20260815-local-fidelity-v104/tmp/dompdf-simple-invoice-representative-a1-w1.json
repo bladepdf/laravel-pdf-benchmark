@@ -1,0 +1,19 @@
+{
+    "run_id": "20260815-local-fidelity-v104",
+    "renderer": "dompdf",
+    "variant": "default",
+    "template": "simple-invoice",
+    "scenario": "representative",
+    "phase": "fidelity",
+    "asset_mode": "portable",
+    "attempt": 1,
+    "worker": 1,
+    "iterations": [
+        1
+    ],
+    "ready_path": "\/workspace\/results\/runs\/20260815-local-fidelity-v104\/tmp\/barrier-dompdf-simple-invoice-representative-a1\/worker-1.ready",
+    "start_path": "\/workspace\/results\/runs\/20260815-local-fidelity-v104\/tmp\/barrier-dompdf-simple-invoice-representative-a1\/start",
+    "artifact_iteration": 1,
+    "artifact_path": "\/workspace\/results\/runs\/20260815-local-fidelity-v104\/tmp\/artifact-dompdf-simple-invoice-portable-representative-a1.pdf",
+    "observation_path": "\/workspace\/results\/runs\/20260815-local-fidelity-v104\/raw\/attempts\/dompdf__default__simple-invoice__portable__representative\/a1-w1.jsonl"
+}
